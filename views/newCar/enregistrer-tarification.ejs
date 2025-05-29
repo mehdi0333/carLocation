@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Tarification</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/enregistrer.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <% if (!isLogged) { %> <%- include('../components/navbar') %> <% } else if
+      (!user.est_proprietaire) { %> <%-
+      include('../components/navbarLocataire.ejs') %> <% } else { %> <%-
+      include('../components/navbarProprietaire.ejs') %> <% } %>
+
+      <main>
+        <div class="container">
+          <div class="register-content">
+            <h1>Enregistrer ma voiture</h1>
+            <p class="subtitle">
+              Partagez les détails de votre véhicule pour commencer à le louer
+            </p>
+
+            <div class="progress-bar">
+              <div class="step completed">
+                <div class="step-number">
+                  <i class="fas fa-check"></i>
+                </div>
+                <p>Informations véhicule</p>
+              </div>
+              <div class="step completed">
+                <div class="step-number">
+                  <i class="fas fa-check"></i>
+                </div>
+                <p>Documents</p>
+              </div>
+              <div class="step completed">
+                <div class="step-number">
+                  <i class="fas fa-check"></i>
+                </div>
+                <p>Photos</p>
+              </div>
+              <div class="step active">
+                <div class="step-number">
+                  <i class="fas fa-check"></i>
+                </div>
+                <p>Options & Services</p>
+              </div>
+              <div class="step active">
+                <div class="step-number">
+                  <span>5</span>
+                </div>
+                <p>Tarification</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>6</span>
+                </div>
+                <p>Confirmation</p>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <h2>Tarification</h2>
+
+              <form id="pricing-form">
+                <div class="form-group">
+                  <label for="prix-jour">Prix par jour</label>
+                  <div class="input-with-suffix">
+                    <input
+                      type="text"
+                      id="prix-jour"
+                      name="prix-jour"
+                      placeholder="Ex: 4000"
+                      required
+                    />
+                    <span class="suffix">DZD/jour</span>
+                  </div>
+                </div>
+
+                <p class="price-recommendation">
+                  Prix recommandé pour votre véhicule: 4000DZD - 6000DZD par
+                  jour
+                </p>
+
+                <h3>Options de tarification</h3>
+
+                <div class="pricing-option">
+                  <div class="pricing-option-info">
+                    <h4>Réduction hebdomadaire</h4>
+                    <p>
+                      Réduction appliquée pour les locations de 7 jours ou plus
+                    </p>
+                  </div>
+                  <div class="select-wrapper small">
+                    <select id="reduction-hebdo" name="reduction-hebdo">
+                      <option value="0">0%</option>
+                      <option value="5">5%</option>
+                      <option value="10" selected>10%</option>
+                      <option value="15">15%</option>
+                      <option value="20">20%</option>
+                    </select>
+                    <i class="fas fa-chevron-down"></i>
+                  </div>
+                </div>
+
+                <div class="pricing-option">
+                  <div class="pricing-option-info">
+                    <h4>Réduction mensuelle</h4>
+                    <p>
+                      Réduction appliquée pour les locations de 30 jours ou plus
+                    </p>
+                  </div>
+                  <div class="select-wrapper small">
+                    <select id="reduction-mensuelle" name="reduction-mensuelle">
+                      <option value="0">0%</option>
+                      <option value="10">10%</option>
+                      <option value="15">15%</option>
+                      <option value="20" selected>20%</option>
+                      <option value="25">25%</option>
+                      <option value="30">30%</option>
+                    </select>
+                    <i class="fas fa-chevron-down"></i>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button
+                    type="button"
+                    class="btn-prev"
+                    onclick="window.location.href='enregistrer-photo'"
+                  >
+                    <i class="fas fa-arrow-left"></i> Précédent
+                  </button>
+                  <button type="submit" class="btn-finish">
+                    Terminer <i class="fas fa-check"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/js/script.js"></script>
+    <script src="/js/newCar/enregistrer-tarification.js"></script>
+  </body>
+</html>

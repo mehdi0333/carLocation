@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Tableau de bord</title>
+    <link rel="stylesheet" href="/css/prop dashboard/dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <%- include('propAsideBar.ejs',{active : "main" }) %>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+          <h2>Tableau de bord</h2>
+          <%- include('propNavBar.ejs',{user}) %>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+          <!-- Stats Cards -->
+          <div class="stats-container">
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Revenus (ce mois)</h3>
+                <div class="stat-value"><%=statistique.moisPayment%> DZD</div>
+                <% if (statistique.moisPaymentpercent.isHigher) { %>
+                <div class="stat-change positive">
+                  <i class="fas fa-arrow-up"></i>
+                  +<%=statistique.moisPaymentpercent.number %>% depuis le mois
+                  dernier
+                </div>
+                <% } else { %>
+                <div class="stat-change negative">
+                  <i class="fas fa-arrow-down"></i>
+                  -<%=statistique.moisPaymentpercent.number %>% depuis le mois
+                  dernier
+                </div>
+                <% } %>
+              </div>
+              <div class="stat-icon money">
+                <i class="fas fa-euro-sign"></i>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Réservations (ce mois)</h3>
+                <div class="stat-value"><%=statistique.moisReservation%></div>
+                <% if (statistique.moisReservationpercent.isHigher) { %>
+                <div class="stat-change positive">
+                  <i class="fas fa-arrow-up"></i>
+                  +<%=statistique.moisReservationpercent.number %>% depuis le
+                  mois dernier
+                </div>
+                <% } else { %>
+                <div class="stat-change negative">
+                  <i class="fas fa-arrow-down"></i>
+                  -<%=statistique.moisReservationpercent.number %>% depuis le
+                  mois dernier
+                </div>
+                <% } %>
+              </div>
+              <div class="stat-icon calendar">
+                <i class="far fa-calendar-check"></i>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Nouveaux locataires</h3>
+                <div class="stat-value"><%=statistique.newLocataire%></div>
+                <% if (statistique.newLocatairepercent.isHigher) { %>
+                <div class="stat-change positive">
+                  <i class="fas fa-arrow-up"></i>
+                  +<%=statistique.newLocatairepercent.number %>% depuis le mois
+                  dernier
+                </div>
+                <% } else { %>
+                <div class="stat-change negative">
+                  <i class="fas fa-arrow-down"></i>
+                  -<%=statistique.newLocatairepercent.number %>% depuis le mois
+                  dernier
+                </div>
+                <% } %>
+              </div>
+              <div class="stat-icon users">
+                <i class="fas fa-users"></i>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Taux d'occupation</h3>
+                <div class="stat-value"><%=statistique.tauxOccupation%>%</div>
+                <% if (statistique.tauxOccupationpercent.isHigher) { %>
+                <div class="stat-change positive">
+                  <i class="fas fa-arrow-up"></i>
+                  +<%=statistique.tauxOccupationpercent.number %>% depuis le
+                  mois dernier
+                </div>
+                <% } else { %>
+                <div class="stat-change negative">
+                  <i class="fas fa-arrow-down"></i>
+                  -<%=statistique.tauxOccupationpercent.number %>% depuis le
+                  mois dernier
+                </div>
+                <% } %>
+              </div>
+              <div class="stat-icon car">
+                <i class="fas fa-car"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicles and Reservations -->
+          <div class="dashboard-grid">
+            <!-- My Vehicles -->
+            <div class="dashboard-card">
+              <div class="card-header">
+                <h3>Mes véhicules</h3>
+              </div>
+              <div class="card-content">
+                <table class="vehicles-table">
+                  <thead>
+                    <tr>
+                      <th>Véhicule</th>
+                      <th>Status</th>
+                      <th>Réservations</th>
+                      <th>Revenus</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% myCars.forEach(car => { %>
+                    <tr>
+                      <td>
+                        <div class="vehicle-info">
+                          <div class="vehicle-icon">
+                            <i class="fas fa-car"></i>
+                          </div>
+                          <div><%=`${car.marque} ${car.modele}`%></div>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="status maintenance"><%=car.status%></span>
+                      </td>
+                      <td><%=car.reservation%></td>
+                      <td><%=car.total%> DZD</td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+                <div class="card-action">
+                  <button
+                    class="btn-add"
+                    onclick="window.location.href = '/enregister-vehicule'"
+                  >
+                    <i class="fas fa-plus"></i> Ajouter un véhicule
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Reservations -->
+            <div class="dashboard-card">
+              <div class="card-header">
+                <h3>Réservations récentes</h3>
+              </div>
+              <div class="card-content">
+                <table class="reservations-table">
+                  <thead>
+                    <tr>
+                      <th>Client</th>
+                      <th>Véhicule</th>
+                      <th>Période</th>
+                      <th>Status</th>
+                      <th>Montant</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% reservations.forEach(reservation => { %>
+                    <tr>
+                      <td><%=reservation.user.name%></td>
+                      <td>
+                        <%=`${reservation.car.marque}
+                        ${reservation.car.modele}`%>
+                      </td>
+                      <td>
+                        <%=`${reservation.startDate.replaceAll("-","/")} -
+                        ${reservation.endDate.replaceAll("-","/")}`%>
+                      </td>
+                      <td>
+                        <span class="status completed">
+                          <%=reservation.status%>
+                        </span>
+                      </td>
+                      <td><%=reservation.prix%> DA</td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+                <% if (reservations.length !== 0) { %>
+                <div class="card-action">
+                  <a href="reservations" class="link-all"
+                    >Voir toutes les réservations</a
+                  >
+                </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Availability Calendar -->
+          <div class="dashboard-card full-width">
+            <div class="card-header">
+              <h3>Disponibilité</h3>
+            </div>
+            <div class="card-content">
+              <div class="calendar-header">
+                <h4>Juin 2023</h4>
+                <div class="calendar-nav">
+                  <button class="btn-nav prev">
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+                  <button class="btn-nav next">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="calendar">
+                <div class="calendar-weekdays">
+                  <div>Lun</div>
+                  <div>Mar</div>
+                  <div>Mer</div>
+                  <div>Jeu</div>
+                  <div>Ven</div>
+                  <div>Sam</div>
+                  <div>Dim</div>
+                </div>
+                <div class="calendar-days" id="calendar-days">
+                  <!-- Calendar days will be generated by JavaScript -->
+                </div>
+              </div>
+              <div class="card-action">
+                <a href="disponibilite" class="btn-secondary"
+                  >Gérer la disponibilité</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/js/prop dashboard/proprietaire.js"></script>
+  </body>
+</html>

@@ -1,0 +1,343 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 230px;
+    background-color: #fff;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+}
+
+.logo {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.logo h1 {
+    color: #8a3ffc;
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+
+.logo p {
+    color: #666;
+    font-size: 12px;
+}
+
+.menu {
+    padding: 20px 0;
+    flex-grow: 1;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #666;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.menu-item i {
+    margin-right: 12px;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.menu-item:hover {
+    background-color: #f8f9fa;
+    color: #8a3ffc;
+}
+
+.menu-item.active {
+    background-color: #f0e7ff;
+    color: #8a3ffc;
+    border-left: 3px solid #8a3ffc;
+}
+
+.sidebar-footer {
+    padding: 20px 0;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    margin-left: 230px;
+    padding: 20px;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.notifications {
+    position: relative;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.notifications i {
+    font-size: 20px;
+    color: #666;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #ff4757;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.user-name {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.user-email {
+    color: #666;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #8a3ffc;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+/* Reservations Content Styles */
+.reservations-content {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.reservations-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.reservations-header h2 {
+    font-size: 18px;
+    color: #333;
+}
+
+.search-filter {
+    display: flex;
+    gap: 10px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.search-box input {
+    padding: 8px 10px 8px 35px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    width: 250px;
+}
+
+.btn-filter {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.reservations-tabs {
+    display: flex;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 0 20px;
+}
+
+.tab-btn {
+    padding: 15px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+    position: relative;
+}
+
+.tab-btn.active {
+    color: #8a3ffc;
+    font-weight: 500;
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #8a3ffc;
+}
+
+.reservations-table-container {
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.reservations-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.reservations-table th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #666;
+    font-weight: 500;
+}
+
+.reservations-table td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status.completed {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.status.upcoming {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+}
+
+.status.ongoing {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+}
+
+.status.cancelled {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.btn-details {
+    color: #8a3ffc;
+    text-decoration: none;
+}
+
+.btn-details:hover {
+    text-decoration: underline;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.pagination-info {
+    font-size: 14px;
+    color: #666;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-page {
+    padding: 5px 10px;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-page.active {
+    background-color: #8a3ffc;
+    color: white;
+    border-color: #8a3ffc;
+}
+
+.btn-page.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}

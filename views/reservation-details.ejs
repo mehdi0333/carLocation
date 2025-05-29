@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Détails de la réservation</title>
+    <link rel="stylesheet" href="/css/reservation-details.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Modal Overlay -->
+    <div class="modal-overlay active" id="reservationModal">
+      <div class="modal-container">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h2>Détails de la réservation</h2>
+          <button class="close-btn" id="closeModal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="modal-content">
+          <!-- Reservation Info -->
+          <div class="reservation-info">
+            <div class="info-row">
+              <div class="info-label">ID de réservation</div>
+              <div class="info-value" id="reservationId">
+                <%=reservation._id%>
+              </div>
+            </div>
+
+            <div class="info-row">
+              <div class="info-label">Statut</div>
+              <div class="info-value">
+                <span class="status upcoming" id="reservationStatus"
+                  ><%=reservation.status%></span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Client Info -->
+          <div class="section">
+            <h3><i class="fas fa-user"></i> Informations du client</h3>
+            <div class="client-card">
+              <div class="client-avatar">
+                <%=reservation.user.nom[0].toUpperCase()%>
+              </div>
+              <div class="client-details">
+                <div class="client-name" id="clientName">
+                  <%=`${reservation.user.nom} ${reservation.user.prenom}`%>
+                </div>
+                <div class="client-email" id="clientEmail">
+                  <%=reservation.user.email%>
+                </div>
+                <div class="client-phone" id="clientPhone">
+                  <%=reservation.user.telephone%>
+                </div>
+              </div>
+              <div class="client-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+                <span class="rating-text"><%=reservation.car.rating%>/5</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle Info -->
+          <div class="section">
+            <h3><i class="fas fa-car"></i> Véhicule</h3>
+            <div class="vehicle-card">
+              <div class="vehicle-image">
+                <img
+                  src="<%=reservation.car.carImg%>"
+                  alt="Peugeot 208"
+                  id="vehicleImage"
+                />
+              </div>
+              <div class="vehicle-details">
+                <div class="vehicle-name" id="vehicleName">
+                  <%=`${reservation.car.marque} ${reservation.car.modele}`%>
+                </div>
+                <div class="vehicle-specs">
+                  <span><i class="fas fa-gas-pump"></i> Essence</span>
+                  <span><i class="fas fa-cog"></i> Manuelle</span>
+                  <span><i class="fas fa-users"></i> 5 places</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Booking Details -->
+          <div class="section">
+            <h3>
+              <i class="fas fa-calendar-alt"></i> Détails de la réservation
+            </h3>
+            <div class="booking-details">
+              <div class="detail-row">
+                <div class="detail-label">Période de location</div>
+                <div class="detail-value" id="bookingPeriod">
+                  <%=`${reservation.startDate.replaceAll("-","/")} -
+                  ${reservation.endDate.replaceAll("-","/")}`%>
+                </div>
+              </div>
+              <div class="detail-row">
+                <div class="detail-label">Durée</div>
+                <div class="detail-value" id="bookingDuration">
+                  <%=reservation.duration%> jours
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Info -->
+          <div class="section">
+            <h3><i class="fas fa-credit-card"></i> Informations de paiement</h3>
+            <div class="payment-details">
+              <div class="payment-row">
+                <span>Prix par jour</span>
+                <span id="dailyPrice"><%=reservation.car.prix%> DZD</span>
+              </div>
+              <div class="payment-row">
+                <span>Nombre de jours</span>
+                <span id="numberOfDays"><%=reservation.duration%></span>
+              </div>
+              <div class="payment-row total">
+                <span>Total</span>
+                <span id="totalAmount"><%=reservation.prix%> DZD</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Notes -->
+          <!-- <div class="section">
+            <h3><i class="fas fa-sticky-note"></i> Notes supplémentaires</h3>
+            <div class="notes" id="additionalNotes">
+              J'ai besoin de la voiture pour un voyage d'affaires. Je suis un
+              conducteur expérimenté et je prendrai soin du véhicule.
+            </div>
+          </div> -->
+        </div>
+
+        <!-- Modal Actions -->
+        <div class="modal-actions" id="modalActions">
+          <% if (reservation.status !== "refusée") { %>
+          <button
+            class="btn-secondary"
+            id="rejectBtn"
+            data-reservationId="<%=reservation._id%>"
+          >
+            <i class="fas fa-times"></i> Refuser
+          </button>
+          <% } %> <% if (reservation.status !== "confirmée") { %>
+
+          <button
+            class="btn-primary"
+            data-reservationId="<%=reservation._id%>"
+            id="acceptBtn"
+          >
+            <i class="fas fa-check"></i> Accepter
+          </button>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div class="toast" id="toast">
+      <div class="toast-content">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Réservation acceptée avec succès!</span>
+      </div>
+    </div>
+
+    <script src="/js/reservation-details.js"></script>
+  </body>
+</html>

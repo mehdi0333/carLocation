@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Connexion</title>
+    <link rel="stylesheet" href="/css/auth.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="page-wrapper connexion-page">
+      <%- include('./components/navbarConnexion.ejs') %>
+
+      <main>
+        <div class="container">
+          <div class="auth-content">
+            <div class="auth-card">
+              <h1>Connectez-vous à CarShare</h1>
+              <p class="subtitle">
+                Accédez à votre compte pour louer des voitures
+              </p>
+
+              <form class="auth-form" action="/connexion" method="POST">
+                <div class="form-group <%= email!== '' ? 'error' : '' %>">
+                  <label for="email-login">Email</label>
+                  <input
+                    type="email"
+                    value="<%= values.email %>"
+                    id="email-login"
+                    name="email"
+                    required
+                  />
+                  <% if (email!== '') { %>
+                  <div class="error-message"><%= email%></div>
+                  <% } %>
+                </div>
+
+                <div class="form-group <%= password!== '' ? 'error' : '' %>">
+                  <label for="password-login">Mot de passe</label>
+                  <input
+                    type="password"
+                    id="password-login"
+                    name="password"
+                    value="<%= values.password %>"
+                    required
+                  />
+                  <% if (password!== '') { %>
+                  <div class="error-message"><%= password%></div>
+                  <% } %>
+                </div>
+
+                <div class="form-row between">
+                  <div class="form-group checkbox">
+                    <input type="checkbox" id="remember-me" name="rememberMe" />
+                    <label for="remember-me">Se souvenir de moi</label>
+                  </div>
+                  <a href="#" class="text-link">Mot de passe oublié?</a>
+                </div>
+
+                <button type="submit" class="btn-auth">Se connecter</button>
+
+                <div class="auth-footer">
+                  <p>
+                    Pas encore de compte?
+                    <a href="inscription" class="text-link">S'inscrire</a>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="container">
+          <p class="copyright">© 2025 CarShare. Tous droits réservés.</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

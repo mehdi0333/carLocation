@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Peugeot 208 GT Line</title>
+    <link rel="stylesheet" href="/css/annonce.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <% if (!isLogged) { %> <%- include('./components/navbar') %> <% } else if
+    (!user.est_proprietaire) { %> <%-
+    include('./components/navbarLocataire.ejs') %> <% } else { %> <%-
+    include('./components/navbarProprietaire.ejs') %> <% } %>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Photo Slider Section -->
+      <section class="photo-slider-section">
+        <div class="photo-slider-container">
+          <div class="photo-slider" id="photo-slider">
+            <% car.carImg.forEach((img, index) => { %>
+              <div class="photo-slide <%= index === 0 ? 'active' : '' %>">
+                <img src="<%=img%>" alt="Car Image <%=index + 1%>" />
+              </div>
+            <% }); %>
+          </div>
+
+          <button class="slider-nav prev" id="prev-slide">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="slider-nav next" id="next-slide">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+
+          <div class="photo-thumbnails" id="photo-thumbnails">
+            <% car.carImg.forEach((img, index) => { %>
+              <div class="thumbnail <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>">
+                <img src="<%=img%>" />
+              </div>
+              <% }); %>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vehicle Info Section -->
+      <section class="vehicle-info-section">
+        <div class="vehicle-header">
+          <div class="vehicle-title">
+            <h1><%=`${car.marque} ${car.modele}`%></h1>
+            <div class="location-rating">
+              <div class="location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span><%= car.location%></span>
+              </div>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <span>4.9 (124 avis)</span>
+              </div>
+            </div>
+          </div>
+          <div class="vehicle-price">
+            <div class="price"><%=car.prix%> DZD <span>/jour</span></div>
+            <div class="insurance">Assurance incluse</div>
+          </div>
+        </div>
+
+        <div class="vehicle-specs">
+          <div class="spec-item">
+            <div class="spec-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="spec-details">
+              <div class="spec-label">Année</div>
+              <div class="spec-value"><%=car.Annee%></div>
+            </div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-icon">
+              <i class="fas fa-tachometer-alt"></i>
+            </div>
+            <div class="spec-details">
+              <div class="spec-label">Kilométrage</div>
+              <div class="spec-value"><%=car.kilometrage%> km</div>
+            </div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-icon">
+              <i class="fas fa-gas-pump"></i>
+            </div>
+            <div class="spec-details">
+              <div class="spec-label">Carburant</div>
+              <div class="spec-value"><%=car.Carburant%></div>
+            </div>
+          </div>  
+          <div class="spec-item">
+            <div class="spec-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="spec-details">
+              <div class="spec-label">Places</div>
+              <div class="spec-value"><%=car.Places%></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vehicle-description">
+          <h2>Description</h2>
+          <p><%=car.Description%></p>
+        </div>
+
+        <div class="vehicle-features">
+          <h2>Caractéristiques</h2>
+          <div class="features-grid">
+            
+            <% car.Caracteristiques.forEach(feature => { %>
+            <div class="feature-item">
+              <i class="fas fa-check"></i>
+              <span><%=feature%></span>
+            </div>
+          <% }); %>
+        </div>
+      </section>
+
+      <!-- Owner Section -->
+      <section class="owner-section">
+        <h2>À propos du propriétaire</h2>
+        <div class="owner-info">
+          <div class="owner-profile">
+            <div class="owner-avatar">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Container%20%2810%29-4NDXcYhhfqXHqaWAqEzSIsRyYWUS0g.png"
+                alt="<%=carOwner.name%>"
+              />
+            </div>
+            <div class="owner-details">
+              <h3><%=carOwner.name%></h3>
+              <div class="owner-meta">
+                <span>Membre depuis <%=carOwner.year%></span>
+                <div class="owner-rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.9 (124 avis)</span>
+                </div>
+              </div>
+              <% if (carOwner.statut_compte === "activé"){ %>
+              <div class="owner-verified">
+                <i class="fas fa-check-circle"></i>
+                <span>Identité vérifiée</span>
+              </div>
+              <% } %>
+            </div>
+          </div>
+          <div class="owner-message">
+            <p><%=car.Description%></p>
+          </div>
+          <button class="btn-contact">
+            <i class="fas fa-comment"></i>
+            Contacter Malik
+          </button>
+        </div>
+      </section>
+
+      <!-- Booking Section -->
+      <section class="booking-section">
+        <h2>Réserver cette voiture</h2>
+        <div class="booking-form">
+          <div class="date-picker">
+            <h3>Dates de location</h3>
+            <div class="date-inputs">
+              <div class="date-input">
+                <label for="start-date">Début</label>
+                <div class="input-with-icon">
+                  <i class="fas fa-calendar"></i>
+                  <input type="text" id="start-date" placeholder="JJ/MM/AAAA" />
+                </div>
+              </div>
+              <div class="date-input">
+                <label for="end-date">Fin</label>
+                <div class="input-with-icon">
+                  <i class="fas fa-calendar"></i>
+                  <input type="text" id="end-date" placeholder="JJ/MM/AAAA" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-breakdown" id="totalInformation"
+             data-carId="<%=car._id%>" data-price="<%=car.prix%>" data-semaine="<%=car.remiseSemaine%>" data-month="<%=car.remiseMois%>">
+            <div class="price-item">
+              <span><%=car.prix%> DZD x 0 jours</span>
+              <span>0 DZD</span>
+            </div>
+            <div class="price-item">
+              <span>Assurance</span>
+              <span class="included">Incluse</span>
+            </div>
+            <div class="price-total">
+              <span>Total</span>
+              <span>0 DZD</span>
+            </div>
+          </div>
+
+          <button class="btn-book" data-carId="<%=car._id%>">
+            Réserver maintenant
+          </button>
+
+          <div class="booking-info">
+            <div class="info-item">
+              <i class="fas fa-check-circle"></i>
+              <span>Annulation gratuite jusqu'à 24h avant</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-check-circle"></i>
+              <span>Assurance tous risques incluse</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-logo">
+        <a href="#">CarShare</a>
+      </div>
+      <div class="footer-copyright">© 2023 CarShare. Tous droits réservés.</div>
+    </footer>
+
+    <script src="/js/annonce.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Mon Profil</title>
+    <link rel="stylesheet" href="/css/mon-profil.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div
+          class="logo"
+          onclick="window.location.href='/'"
+          style="cursor: pointer"
+        >
+          <h1>CarShare</h1>
+        </div>
+        <div class="user-info">
+          <div class="notifications">
+            <i class="far fa-bell"></i>
+            <span class="notification-badge">3</span>
+          </div>
+          <div class="user">
+            <span class="user-name"><%=`${user.nom} ${user.prenom}`%></span>
+            <div class="user-avatar"><%=user.nom[0].toUpperCase()%></div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="profile-avatar-container">
+            <div class="profile-avatar">
+              <% if (user.userImg) { %>
+              <img
+                src="<%=user.userImg%>"
+                alt="profileImg"
+                style="width: 100%; height: 100%; border-radius: 50%"
+              />
+              <% } else { %>
+              <span><%=user.nom[0].toUpperCase()%></span>
+              <% } %>
+            </div>
+            <button class="avatar-edit-btn">
+              <i class="fas fa-camera"></i>
+              <span>Changer la photo</span>
+              <input
+                type="file"
+                id="avatar-upload"
+                accept="image/*"
+                style="display: none"
+              />
+            </button>
+          </div>
+          <div class="profile-info">
+            <h2><%=`${user.nom} ${user.prenom}`%></h2>
+            <p>Membre depuis <%=user.createdAt.getFullYear()%></p>
+
+            <div class="profile-stats">
+              <div class="stat">
+                <div class="stat-value"><%=user.cars.length%></div>
+                <div class="stat-label">Véhicules</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Sections -->
+        <div class="profile-sections">
+          <!-- Personal Information -->
+          <div class="profile-section">
+            <div class="section-header">
+              <h3>Informations personnelles</h3>
+              <button class="btn-edit" data-section="personal">
+                <i class="fas fa-edit"></i> Modifier
+              </button>
+            </div>
+
+            <div class="section-content" id="personal-info">
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Prénom</label>
+                  <p><%=user.prenom%></p>
+                </div>
+                <div class="info-item">
+                  <label>Nom</label>
+                  <p><%=user.nom%></p>
+                </div>
+                <div class="info-item">
+                  <label>Email</label>
+                  <p><%=user.email%></p>
+                </div>
+                <div class="info-item">
+                  <label>Téléphone</label>
+                  <p><%=user.telephone%></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-edit hidden" id="personal-edit">
+              <form id="personal-form">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="first-name">Prénom</label>
+                    <input
+                      type="text"
+                      id="first-name"
+                      value="<%=user.prenom%>"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="last-name">Nom</label>
+                    <input type="text" id="last-name" value="<%=user.nom%>" />
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" value="<%=user.email%>" />
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" value="<%=user.telephone%>" />
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button
+                    type="button"
+                    class="btn-cancel"
+                    data-section="personal"
+                  >
+                    Annuler
+                  </button>
+                  <button type="submit" class="btn-save">Enregistrer</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Account Information -->
+          <div class="profile-section">
+            <div class="section-header">
+              <h3>Informations du compte</h3>
+              <button class="btn-edit" data-section="account">
+                <i class="fas fa-edit"></i> Modifier
+              </button>
+            </div>
+
+            <div class="section-content" id="account-info">
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Mot de passe</label>
+                  <p>••••••••</p>
+                </div>
+                <div class="info-item">
+                  <label>Langue</label>
+                  <p>Français</p>
+                </div>
+                <div class="info-item">
+                  <label>Devise</label>
+                  <p>DZD (Dinar Algérien)</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-edit hidden" id="account-edit">
+              <form id="account-form">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input
+                      type="password"
+                      id="password"
+                      placeholder="Nouveau mot de passe"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="currency">Devise</label>
+                    <select id="currency">
+                      <option value="dzd" selected>DZD (Dinar Algérien)</option>
+                      <option value="eur">EUR (Euro)</option>
+                      <option value="usd">USD (Dollar Américain)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button
+                    type="button"
+                    class="btn-cancel"
+                    data-section="account"
+                  >
+                    Annuler
+                  </button>
+                  <button type="submit" class="btn-save">Enregistrer</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Preferences -->
+          <div class="profile-section">
+            <div class="section-header">
+              <h3>Préférences</h3>
+              <button class="btn-edit" data-section="preferences">
+                <i class="fas fa-edit"></i> Modifier
+              </button>
+            </div>
+
+            <div class="section-content" id="preferences-info">
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Notifications par email</label>
+                  <p>Activées</p>
+                </div>
+                <div class="info-item">
+                  <label>Notifications SMS</label>
+                  <p>Désactivées</p>
+                </div>
+                <div class="info-item">
+                  <label>Newsletters</label>
+                  <p>Activées</p>
+                </div>
+                <div class="info-item">
+                  <label>Partage de données</label>
+                  <p>Désactivé</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-edit hidden" id="preferences-edit">
+              <form id="preferences-form">
+                <div class="form-grid">
+                  <div class="form-group toggle">
+                    <label for="email-notifications"
+                      >Notifications par email</label
+                    >
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="email-notifications" checked />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                  <div class="form-group toggle">
+                    <label for="sms-notifications">Notifications SMS</label>
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="sms-notifications" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                  <div class="form-group toggle">
+                    <label for="newsletters">Newsletters</label>
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="newsletters" checked />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                  <div class="form-group toggle">
+                    <label for="data-sharing">Partage de données</label>
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="data-sharing" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button
+                    type="button"
+                    class="btn-cancel"
+                    data-section="preferences"
+                  >
+                    Annuler
+                  </button>
+                  <button type="submit" class="btn-save">Enregistrer</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Payment Information -->
+          <div class="profile-section">
+            <div class="section-header">
+              <h3>Informations de paiement</h3>
+              <button class="btn-edit" data-section="payment">
+                <i class="fas fa-edit"></i> Modifier
+              </button>
+            </div>
+
+            <div class="section-content" id="payment-info">
+              <div class="payment-methods">
+                <div class="payment-method">
+                  <div class="payment-icon">
+                    <i class="fab fa-cc-visa"></i>
+                  </div>
+                  <div class="payment-details">
+                    <h4>Carte Visa</h4>
+                    <p>**** **** **** 4567</p>
+                    <p>Expire: 05/2025</p>
+                  </div>
+                  <div class="payment-badge primary">Principal</div>
+                </div>
+
+                <div class="payment-method">
+                  <div class="payment-icon">
+                    <i class="fas fa-university"></i>
+                  </div>
+                  <div class="payment-details">
+                    <h4>Compte bancaire</h4>
+                    <p>Banque Nationale d'Algérie</p>
+                    <p>**** **** 7890</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-edit hidden" id="payment-edit">
+              <div class="payment-methods-edit">
+                <div class="payment-method-edit">
+                  <h4>Carte Visa</h4>
+                  <div class="form-grid">
+                    <div class="form-group toggle">
+                      <label for="primary-card">Définir comme principal</label>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="primary-card" checked />
+                        <span class="toggle-slider"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-actions method-actions">
+                    <button type="button" class="btn-delete">Supprimer</button>
+                  </div>
+                </div>
+
+                <div class="payment-method-edit">
+                  <h4>Compte bancaire</h4>
+                  <div class="form-grid">
+                    <div class="form-group toggle">
+                      <label for="primary-bank">Définir comme principal</label>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="primary-bank" />
+                        <span class="toggle-slider"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-actions method-actions">
+                    <button type="button" class="btn-delete">Supprimer</button>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  id="add-payment-btn"
+                  class="btn-add-payment"
+                >
+                  <i class="fas fa-plus"></i> Ajouter un moyen de paiement
+                </button>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn-cancel" data-section="payment">
+                  Annuler
+                </button>
+                <button type="button" class="btn-save" id="save-payment">
+                  Enregistrer
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="profile-section danger-zone">
+            <div class="section-header">
+              <h3>Zone de danger</h3>
+            </div>
+
+            <div class="section-content">
+              <div class="danger-content">
+                <div class="danger-info">
+                  <h4>Supprimer mon compte</h4>
+                  <p>
+                    Cette action est irréversible. Toutes vos données seront
+                    définitivement supprimées.
+                  </p>
+                </div>
+                <button type="button" class="btn-danger" id="delete-account">
+                  Supprimer mon compte
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add Payment Method Modal -->
+    <div class="modal" id="payment-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Ajouter un moyen de paiement</h3>
+          <button type="button" class="btn-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="payment-options">
+            <h4>Choisissez un type de paiement</h4>
+
+            <div class="payment-option-grid">
+              <div class="payment-option" data-type="credit-card">
+                <div class="payment-option-icon">
+                  <i class="far fa-credit-card"></i>
+                </div>
+                <div class="payment-option-label">Carte de crédit</div>
+              </div>
+
+              <div class="payment-option" data-type="paypal">
+                <div class="payment-option-icon">
+                  <i class="fab fa-paypal"></i>
+                </div>
+                <div class="payment-option-label">PayPal</div>
+              </div>
+
+              <div class="payment-option" data-type="bank">
+                <div class="payment-option-icon">
+                  <i class="fas fa-university"></i>
+                </div>
+                <div class="payment-option-label">Compte bancaire</div>
+              </div>
+
+              <div class="payment-option" data-type="edahabia">
+                <div class="payment-option-icon">
+                  <i class="fas fa-money-check"></i>
+                </div>
+                <div class="payment-option-label">Carte Edahabia</div>
+              </div>
+
+              <div class="payment-option" data-type="cib">
+                <div class="payment-option-icon">
+                  <i class="fas fa-money-check-alt"></i>
+                </div>
+                <div class="payment-option-label">Carte CIB</div>
+              </div>
+
+              <div class="payment-option" data-type="satim">
+                <div class="payment-option-icon">
+                  <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="payment-option-label">SATIM</div>
+              </div>
+            </div>
+
+            <!-- Credit Card Form (initially hidden) -->
+            <div class="payment-form hidden" id="credit-card-form">
+              <h4>Informations de carte</h4>
+              <div class="form-group">
+                <label for="card-number">Numéro de carte</label>
+                <input
+                  type="text"
+                  id="card-number"
+                  placeholder="1234 5678 9012 3456"
+                />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="expiry-date">Date d'expiration</label>
+                  <input type="text" id="expiry-date" placeholder="MM/AA" />
+                </div>
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" placeholder="123" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="card-name">Nom sur la carte</label>
+                <input type="text" id="card-name" placeholder="DOOM SLAYER" />
+              </div>
+            </div>
+
+            <!-- Bank Account Form (initially hidden) -->
+            <div class="payment-form hidden" id="bank-form">
+              <h4>Informations bancaires</h4>
+              <div class="form-group">
+                <label for="bank-name">Banque</label>
+                <select id="bank-name">
+                  <option value="">Sélectionnez une banque</option>
+                  <option value="bna">Banque Nationale d'Algérie</option>
+                  <option value="bea">Banque Extérieure d'Algérie</option>
+                  <option value="badr">
+                    Banque de l'Agriculture et du Développement Rural
+                  </option>
+                  <option value="bdc">Banque de Développement Local</option>
+                  <option value="cnep">CNEP Banque</option>
+                  <option value="abc">Arab Banking Corporation</option>
+                  <option value="natixis">Natixis Algérie</option>
+                  <option value="societe">Société Générale Algérie</option>
+                  <option value="albaraka">Al Baraka Bank</option>
+                  <option value="trust">Trust Bank Algeria</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="account-number">Numéro de compte</label>
+                <input
+                  type="text"
+                  id="account-number"
+                  placeholder="0123456789"
+                />
+              </div>
+              <div class="form-group">
+                <label for="account-name">Nom du titulaire</label>
+                <input
+                  type="text"
+                  id="account-name"
+                  placeholder="DOOM SLAYER"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" id="cancel-payment">
+            Annuler
+          </button>
+          <button type="button" class="btn-save" id="confirm-payment">
+            Ajouter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal" id="delete-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Supprimer mon compte</h3>
+          <button type="button" class="btn-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Cette action est irréversible. Toutes vos données seront
+            définitivement supprimées.
+          </p>
+          <p>
+            Pour confirmer, veuillez saisir
+            <strong>SUPPRIMER</strong> ci-dessous :
+          </p>
+          <div class="form-group">
+            <input type="text" id="delete-confirm" placeholder="SUPPRIMER" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" id="cancel-delete">
+            Annuler
+          </button>
+          <button type="button" class="btn-danger" id="confirm-delete" disabled>
+            Supprimer définitivement
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/mon-profil.js"></script>
+  </body>
+</html>

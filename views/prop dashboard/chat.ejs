@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Interface de Chat</title>
+    <link rel="stylesheet" href="/css/prop dashboard/chatstyles.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="chat-container">
+      <!-- Header -->
+      <% if (!isLogged) { %> <%- include('../components/navbar') %> <% } else if
+      (!user.est_proprietaire) { %> <%-
+      include('../components/navbarLocataire.ejs') %> <% } else { %> <%-
+      include('../components/navbarProprietaire.ejs') %> <% } %>
+
+      <!-- Chat Content -->
+      <div class="chat-content">
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <div class="sidebar-header">
+            <h2>Messages</h2>
+            <button class="btn-icon"><i class="fas fa-plus-circle"></i></button>
+          </div>
+          <div class="search-container">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Rechercher une conversation"
+            />
+          </div>
+          <div class="contacts-list" id="contacts-list">
+            <!-- Contacts will be added here by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area">
+          <div class="chat-header" id="chat-header">
+            <!-- Chat header will be added here by JavaScript -->
+          </div>
+          <div class="messages-container" id="messages-container">
+            <!-- Messages will be added here by JavaScript -->
+          </div>
+          <form class="message-form" id="message-form">
+            <button type="button" class="btn-icon">
+              <i class="fas fa-paperclip"></i>
+            </button>
+            <input
+              type="text"
+              id="message-input"
+              class="message-input"
+              placeholder="Écrivez votre message..."
+            />
+            <button type="button" class="btn-icon">
+              <i class="fas fa-smile"></i>
+            </button>
+            <button type="submit" class="btn-send">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/prop dashboard/chatscript.js"></script>
+  </body>
+</html>

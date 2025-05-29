@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Options et Services</title>
+    <link rel="stylesheet" href="/css/enregistrer.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <% if (!isLogged) { %> <%- include('../components/navbar') %> <% } else if
+      (!user.est_proprietaire) { %> <%-
+      include('../components/navbarLocataire.ejs') %> <% } else { %> <%-
+      include('../components/navbarProprietaire.ejs') %> <% } %>
+
+      <main>
+        <div class="container">
+          <div class="register-content">
+            <h1>Enregistrer ma voiture</h1>
+            <p class="subtitle">
+              Partagez les détails de votre véhicule pour commencer à le louer
+            </p>
+
+            <div class="progress-bar">
+              <div class="step completed">
+                <div class="step-number">
+                  <i class="fas fa-check"></i>
+                </div>
+                <p>Informations véhicule</p>
+              </div>
+              <div class="step completed">
+                <div class="step-number">
+                  <i class="fas fa-check"></i>
+                </div>
+                <p>Documents</p>
+              </div>
+              <div class="step completed">
+                <div class="step-number">
+                  <i class="fas fa-check"></i>
+                </div>
+                <p>Photos</p>
+              </div>
+              <div class="step active">
+                <div class="step-number">
+                  <span>4</span>
+                </div>
+                <p>Options & Services</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>5</span>
+                </div>
+                <p>Tarification</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>6</span>
+                </div>
+                <p>Confirmation</p>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <h2>Options et services</h2>
+              <p class="options-intro">
+                Sélectionnez les options et services disponibles avec votre
+                véhicule pour attirer plus de locataires.
+              </p>
+
+              <form id="options-form">
+                <div class="options-section">
+                  <h3>Caractéristiques du véhicule</h3>
+
+                  <div class="options-grid">
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="climatisation"
+                        name="features"
+                        value="climatisation"
+                      />
+                      <label for="climatisation">
+                        <div class="option-icon">
+                          <i class="fas fa-snowflake"></i>
+                        </div>
+                        <div class="option-label">Climatisation</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="gps"
+                        name="features"
+                        value="gps"
+                      />
+                      <label for="gps">
+                        <div class="option-icon">
+                          <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="option-label">GPS intégré</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="bluetooth"
+                        name="features"
+                        value="bluetooth"
+                      />
+                      <label for="bluetooth">
+                        <div class="option-icon">
+                          <i class="fab fa-bluetooth-b"></i>
+                        </div>
+                        <div class="option-label">Bluetooth</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="camera-recul"
+                        name="features"
+                        value="camera-recul"
+                      />
+                      <label for="camera-recul">
+                        <div class="option-icon">
+                          <i class="fas fa-video"></i>
+                        </div>
+                        <div class="option-label">Caméra de recul</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="sieges-chauffants"
+                        name="features"
+                        value="sieges-chauffants"
+                      />
+                      <label for="sieges-chauffants">
+                        <div class="option-icon">
+                          <i class="fas fa-temperature-high"></i>
+                        </div>
+                        <div class="option-label">Sièges chauffants</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="toit-ouvrant"
+                        name="features"
+                        value="toit-ouvrant"
+                      />
+                      <label for="toit-ouvrant">
+                        <div class="option-icon">
+                          <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="option-label">Toit ouvrant</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="usb"
+                        name="features"
+                        value="usb"
+                      />
+                      <label for="usb">
+                        <div class="option-icon">
+                          <i class="fas fa-usb"></i>
+                        </div>
+                        <div class="option-label">Prises USB</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="regulateur"
+                        name="features"
+                        value="regulateur"
+                      />
+                      <label for="regulateur">
+                        <div class="option-icon">
+                          <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="option-label">Régulateur de vitesse</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="parking-auto"
+                        name="features"
+                        value="parking-auto"
+                      />
+                      <label for="parking-auto">
+                        <div class="option-icon">
+                          <i class="fas fa-parking"></i>
+                        </div>
+                        <div class="option-label">Aide au stationnement</div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="options-section">
+                  <h3>Confort et commodités</h3>
+
+                  <div class="options-grid">
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="siege-bebe"
+                        name="comfort"
+                        value="siege-bebe"
+                      />
+                      <label for="siege-bebe">
+                        <div class="option-icon">
+                          <i class="fas fa-baby"></i>
+                        </div>
+                        <div class="option-label">Siège bébé disponible</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="porte-velo"
+                        name="comfort"
+                        value="porte-velo"
+                      />
+                      <label for="porte-velo">
+                        <div class="option-icon">
+                          <i class="fas fa-bicycle"></i>
+                        </div>
+                        <div class="option-label">Porte-vélos</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="coffre-toit"
+                        name="comfort"
+                        value="coffre-toit"
+                      />
+                      <label for="coffre-toit">
+                        <div class="option-icon">
+                          <i class="fas fa-suitcase"></i>
+                        </div>
+                        <div class="option-label">Coffre de toit</div>
+                      </label>
+                    </div>
+
+                    <div class="option-item">
+                      <input
+                        type="checkbox"
+                        id="chaines-neige"
+                        name="comfort"
+                        value="chaines-neige"
+                      />
+                      <label for="chaines-neige">
+                        <div class="option-icon">
+                          <i class="fas fa-snowflake"></i>
+                        </div>
+                        <div class="option-label">Chaînes à neige</div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="options-section">
+                  <h3>Services supplémentaires</h3>
+
+                  <div class="service-item">
+                    <div class="service-info">
+                      <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                      </div>
+                      <div class="service-details">
+                        <h4>Livraison à domicile</h4>
+                        <p>
+                          Proposez de livrer le véhicule à l'adresse du
+                          locataire
+                        </p>
+                      </div>
+                    </div>
+                    <div class="service-toggle">
+                      <label class="switch">
+                        <input
+                          type="checkbox"
+                          id="livraison"
+                          name="services"
+                          value="livraison"
+                        />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="service-options" id="livraison-options">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="rayon-livraison">Rayon de livraison</label>
+                        <div class="select-wrapper">
+                          <select id="rayon-livraison" name="rayon-livraison">
+                            <option value="5">5 km</option>
+                            <option value="10" selected>10 km</option>
+                            <option value="15">15 km</option>
+                            <option value="20">20 km</option>
+                            <option value="25">25 km</option>
+                          </select>
+                          <i class="fas fa-chevron-down"></i>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="frais-livraison">Frais de livraison</label>
+                        <div class="input-with-suffix">
+                          <input
+                            type="text"
+                            id="frais-livraison"
+                            name="frais-livraison"
+                            placeholder="Ex: 500"
+                            value="500"
+                          />
+                          <span class="suffix">DZD</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="service-item">
+                    <div class="service-info">
+                      <div class="service-icon">
+                        <i class="fas fa-gas-pump"></i>
+                      </div>
+                      <div class="service-details">
+                        <h4>Plein d'essence</h4>
+                        <p>
+                          Proposez de rendre le véhicule avec le plein d'essence
+                        </p>
+                      </div>
+                    </div>
+                    <div class="service-toggle">
+                      <label class="switch">
+                        <input
+                          type="checkbox"
+                          id="plein-essence"
+                          name="services"
+                          value="plein-essence"
+                        />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="service-item">
+                    <div class="service-info">
+                      <div class="service-icon">
+                        <i class="fas fa-broom"></i>
+                      </div>
+                      <div class="service-details">
+                        <h4>Nettoyage inclus</h4>
+                        <p>
+                          Le locataire n'a pas besoin de nettoyer le véhicule
+                          avant de le rendre
+                        </p>
+                      </div>
+                    </div>
+                    <div class="service-toggle">
+                      <label class="switch">
+                        <input
+                          type="checkbox"
+                          id="nettoyage"
+                          name="services"
+                          value="nettoyage"
+                        />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="service-options" id="nettoyage-options">
+                    <div class="form-group">
+                      <label for="frais-nettoyage">Frais de nettoyage</label>
+                      <div class="input-with-suffix">
+                        <input
+                          type="text"
+                          id="frais-nettoyage"
+                          name="frais-nettoyage"
+                          placeholder="Ex: 1000"
+                          value="1000"
+                        />
+                        <span class="suffix">DZD</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="options-section">
+                  <h3>Restrictions</h3>
+
+                  <div class="restriction-item">
+                    <div class="restriction-info">
+                      <div class="restriction-icon">
+                        <i class="fas fa-smoking-ban"></i>
+                      </div>
+                      <div class="restriction-details">
+                        <h4>Non-fumeur</h4>
+                        <p>Interdiction de fumer dans le véhicule</p>
+                      </div>
+                    </div>
+                    <div class="restriction-toggle">
+                      <label class="switch">
+                        <input
+                          type="checkbox"
+                          id="non-fumeur"
+                          name="restrictions"
+                          value="non-fumeur"
+                          checked
+                        />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="restriction-item">
+                    <div class="restriction-info">
+                      <div class="restriction-icon">
+                        <i class="fas fa-paw"></i>
+                      </div>
+                      <div class="restriction-details">
+                        <h4>Animaux interdits</h4>
+                        <p>Pas d'animaux autorisés dans le véhicule</p>
+                      </div>
+                    </div>
+                    <div class="restriction-toggle">
+                      <label class="switch">
+                        <input
+                          type="checkbox"
+                          id="animaux-interdits"
+                          name="restrictions"
+                          value="animaux-interdits"
+                        />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="restriction-item">
+                    <div class="restriction-info">
+                      <div class="restriction-icon">
+                        <i class="fas fa-road"></i>
+                      </div>
+                      <div class="restriction-details">
+                        <h4>Kilométrage limité</h4>
+                        <p>Imposer une limite de kilométrage quotidienne</p>
+                      </div>
+                    </div>
+                    <div class="restriction-toggle">
+                      <label class="switch">
+                        <input
+                          type="checkbox"
+                          id="km-limite"
+                          name="restrictions"
+                          value="km-limite"
+                        />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="restriction-options" id="km-options">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="limite-km">Limite quotidienne</label>
+                        <div class="input-with-suffix">
+                          <input
+                            type="text"
+                            id="limite-km"
+                            name="limite-km"
+                            placeholder="Ex: 200"
+                            value="200"
+                          />
+                          <span class="suffix">km/jour</span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="frais-km"
+                          >Frais par km supplémentaire</label
+                        >
+                        <div class="input-with-suffix">
+                          <input
+                            type="text"
+                            id="frais-km"
+                            name="frais-km"
+                            placeholder="Ex: 10"
+                            value="10"
+                          />
+                          <span class="suffix">DZD/km</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button
+                    type="button"
+                    class="btn-prev"
+                    onclick="window.location.href='enregistrer-photo'"
+                  >
+                    <i class="fas fa-arrow-left"></i> Précédent
+                  </button>
+                  <button type="button" class="btn-next">
+                    Suivant <i class="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/js/newCar/enregister-options.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>

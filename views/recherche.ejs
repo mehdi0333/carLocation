@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Recherche de voitures</title>
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <% if (!isLogged) { %> <%- include('./components/navbar') %> <% } else if
+    (!user.est_proprietaire) { %> <%-
+    include('./components/navbarLocataire.ejs') %> <% } else { %> <%-
+    include('./components/navbarProprietaire.ejs') %> <% } %>
+
+    <main>
+      <div class="container">
+        <h1>Annonces disponibles</h1>
+
+        <div class="search-container">
+          <div class="filters">
+            <h2>Filtres</h2>
+
+            <div class="filter-group">
+              <div class="filter-header">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Localisation</h3>
+              </div>
+              <div class="filter-content">
+                <input
+                  type="text"
+                  placeholder="Ville, code postal..."
+                  id="location"
+                />
+                <div class="select-wrapper">
+                  <select id="radius">
+                    <option value="5">Dans un rayon de 5km</option>
+                    <option value="10">Dans un rayon de 10km</option>
+                    <option value="20">Dans un rayon de 20km</option>
+                    <option value="50">Dans un rayon de 50km</option>
+                  </select>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <div class="filter-header">
+                <i class="far fa-calendar"></i>
+                <h3>Dates</h3>
+              </div>
+              <div class="filter-content">
+                <label>Date de début</label>
+                <div class="date-input">
+                  <input type="date" id="start-date" />
+                </div>
+
+                <label>Date de fin</label>
+                <div class="date-input">
+                  <input type="date" id="end-date" />
+                </div>
+
+                <div class="select-wrapper">
+                  <select id="time-period">
+                    <option value="all-day">Toute la journée</option>
+                    <option value="morning">Matin</option>
+                    <option value="afternoon">Après-midi</option>
+                    <option value="evening">Soir</option>
+                  </select>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <div class="filter-header">
+                <i class="fas fa-tag"></i>
+                <h3>Prix</h3>
+              </div>
+              <div class="filter-content">
+                <div class="price-range">
+                  <input
+                    type="number"
+                    id="min-price"
+                    placeholder="2000"
+                    min="0"
+                  />
+                  <span>à</span>
+                  <input
+                    type="number"
+                    id="max-price"
+                    placeholder="13000"
+                    min="0"
+                  />
+                  <span class="currency">DZD/jour</span>
+                </div>
+                <div class="range-slider">
+                  <input
+                    type="range"
+                    id="price-slider"
+                    min="0"
+                    max="20000"
+                    step="500"
+                    value="10000"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <div class="filter-header">
+                <i class="fas fa-car"></i>
+                <h3>Caractéristiques</h3>
+              </div>
+              <div class="filter-content">
+                <label>Type de véhicule</label>
+                <div class="checkbox-group">
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="citadine" />
+                    <label for="citadine">Citadine</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="berline" />
+                    <label for="berline">Berline</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="suv" />
+                    <label for="suv">SUV</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="break" />
+                    <label for="break">Break</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="utilitaire" />
+                    <label for="utilitaire">Utilitaire</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="cabriolet" />
+                    <label for="cabriolet">Cabriolet</label>
+                  </div>
+                </div>
+
+                <label>Transmission</label>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input type="radio" name="transmission" id="automatique" />
+                    <label for="automatique">Automatique</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" name="transmission" id="manuelle" />
+                    <label for="manuelle">Manuelle</label>
+                  </div>
+                </div>
+
+                <label>Carburant</label>
+                <div class="select-wrapper">
+                  <select id="fuel-type">
+                    <option value="">Tous types</option>
+                    <option value="essence">Essence</option>
+                    <option value="diesel">Diesel</option>
+                    <option value="electrique">Électrique</option>
+                    <option value="hybride">Hybride</option>
+                  </select>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <div class="filter-header">
+                <i class="fas fa-cog"></i>
+                <h3>Équipements</h3>
+              </div>
+              <div class="filter-content">
+                <div class="checkbox-item">
+                  <input type="checkbox" id="bluetooth" />
+                  <label for="bluetooth"
+                    ><i class="fas fa-bluetooth-b"></i> Bluetooth</label
+                  >
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" id="gps" />
+                  <label for="gps"
+                    ><i class="fas fa-map-marker-alt"></i> GPS</label
+                  >
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" id="climatisation" />
+                  <label for="climatisation"
+                    ><i class="fas fa-snowflake"></i> Climatisation</label
+                  >
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" id="usb" />
+                  <label for="usb"><i class="fas fa-usb"></i> Prise USB</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <div class="filter-header">
+                <i class="fas fa-star"></i>
+                <h3>Note minimale</h3>
+              </div>
+              <div class="filter-content">
+                <div class="rating-filter">
+                  <div class="stars">
+                    <i class="fas fa-star" data-rating="1"></i>
+                    <i class="fas fa-star" data-rating="2"></i>
+                    <i class="fas fa-star" data-rating="3"></i>
+                    <i class="fas fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                  </div>
+                  <span class="rating-text">4 étoiles minimum</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-actions">
+              <button id="apply-filters" class="btn-apply">Appliquer</button>
+              <button id="reset-filters" class="btn-reset">
+                Réinitialiser
+              </button>
+            </div>
+          </div>
+
+          <div class="results">
+            <div class="results-header">
+              <span class="results-count"><%= cars.length %> voitures disponibles</span>
+              <div class="results-sort">
+                <span>Trier par:</span>
+                <div class="select-wrapper">
+                  <select id="sort-by">
+                    <option value="price-asc">Prix croissant</option>
+                    <option value="price-desc">Prix décroissant</option>
+                    <option value="rating-desc">Meilleures notes</option>
+                    <option value="distance-asc">Distance</option>
+                  </select>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+                <button class="view-toggle">
+                  <i class="fas fa-th-list"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="cars-grid">
+              <% cars.forEach(car => { %>
+              <div
+                class="car-card"
+                data-price="<%=car.prix%>"
+                data-rating="<%=car.rating%>"
+              >
+                <div class="car-image">
+                  <img src="<%=car.carImg[0]%>" alt="<%=car.modele%>" />
+                  <p class="car-price">
+                    <%=car.prix%> <span class="price-tag">DA / jour</span>
+                  </p>
+                </div>
+                <div class="car-info">
+                  <h3><%=`${car.marque} ${car.modele}`%></h3>
+                  <div class="car-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span><%=car.location%></span>
+                  </div>
+                  <div class="car-rating">
+                    <i class="fas fa-star"></i>
+                    <span>4.8 (24)</span>
+                  </div>
+                  <a href="/annonce/<%=car._id%>" class="btn-details">
+                    Détails
+                  </a>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2024 CarShare. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script src="/js/recherche.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<tr>
+  <td><%=reservation._id%></td>
+  <td><%=`${reservation.user.nom} ${reservation.user.prenom}`%></td>
+  <td><%=`${reservation.car.marque} ${reservation.car.modele}`%></td>
+  <td>
+    <%=reservation.startDate.replaceAll("-","/")%> -
+    <%=reservation.endDate.replaceAll("-","/")%>
+  </td>
+  <td>
+    <span class="status upcoming"><%=reservation.status%></span>
+  </td>
+  <td><%=reservation.prix%> DA</td>
+  <td>
+    <a href="/reservation-details/<%=reservation._id%>" class="btn-details"
+      >Détails</a
+    >
+  </td>
+</tr>

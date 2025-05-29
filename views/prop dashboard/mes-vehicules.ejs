@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Mes véhicules</title>
+    <link rel="stylesheet" href="/css/prop dashboard/mes-vehicules.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <%- include('propAsideBar.ejs',{active : "car" }) %>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-title">
+            <h2>Mes véhicules</h2>
+          </div>
+          <%- include('propNavBar.ejs',{user}) %>
+        </header>
+
+        <!-- Vehicles Content -->
+        <div class="vehicles-content">
+          <div class="vehicles-header">
+            <h2>Mes véhicules</h2>
+            <button
+              class="btn-primary"
+              onclick="window.location.href='/enregister-vehicule'"
+            >
+              <i class="fas fa-plus"></i> Ajouter un véhicule
+            </button>
+          </div>
+
+          <div class="vehicles-table-container">
+            <table class="vehicles-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Véhicule</th>
+                  <th>Immatriculation</th>
+                  <th>Status</th>
+                  <th>Prix/jour</th>
+                  <th>Réservations</th>
+                  <th>Revenus</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% myCars.forEach(car => { %>
+                <tr>
+                  <td class="vehicle-image">
+                    <div class="car-icon">
+                      <i class="fas fa-car"></i>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="vehicle-name">
+                      <%=`${car.marque} ${car.modele}`%>
+                    </div>
+                    <div class="vehicle-details">
+                      <%=car.Annee%> • <%=car.Carburant%>
+                    </div>
+                  </td>
+                  <td>1234 AB 16</td>
+                  <td><span class="status active"><%=car.status%></span></td>
+                  <td><%=car.prix%> DA</td>
+                  <td><%=car.reservations%></td>
+                  <td><%=car.total%> DZD</td>
+                  <td class="actions">
+                    <button class="btn-icon edit" onclick="window.location.href='/edit/enregister-vehicule/<%=car._id%>'">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button
+                      class="btn-icon delete"
+                      onclick="window.location.href='/car/delete/<%=car._id%>'"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/js/prop dashboard/proprietaire.js"></script>
+  </body>
+</html>

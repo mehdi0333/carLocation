@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Location de voiture entre particuliers</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <% if (!isLogged) { %> <%- include('components/navbar') %> <% } else if
+      (!user.est_proprietaire) { %> <%-
+      include('components/navbarLocataire.ejs') %> <% } else { %> <%-
+      include('components/navbarProprietaire.ejs') %> <% } %>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <h1>Louez une voiture<br />en quelques clics</h1>
+            <p class="hero-subtitle">n'as jamais était aussi facile !</p>
+
+            <form class="search-form" action="/recherche" method="post">
+              <div class="form-group full-width">
+                <input
+                  required
+                  name="adresse"
+                  type="text"
+                  placeholder="Adresse précise, gare, métro..."
+                />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    placeholder="Début"
+                    id="start-date"
+                    name="debut"
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    placeholder="Fin"
+                    id="end-date"
+                    name="fin"
+                  />
+                </div>
+              </div>
+              <button class="btn-search" type="submit">Rechercher</button>
+            </form>
+            <p class="small-text">
+              Location de voiture entre particuliers et pros assurée par
+              carshare
+            </p>
+          </div>
+          <div class="hero-image-container">
+            <div class="circle-bg circle-bg-1"></div>
+            <div class="circle-bg circle-bg-2"></div>
+            <div class="circle-bg circle-bg-3"></div>
+            <div class="car-image">
+              <img
+                src="/images/Peugeot-208-2019-Download-Free-PNG.png"
+                alt="Peugeot 208 jaune"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="how-it-works">
+        <div class="container">
+          <h2>Comment ça marche</h2>
+          <p class="section-subtitle">
+            Location de voiture entre particuliers en toute simplicité
+          </p>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-icon">
+                <i class="fas fa-search"></i>
+              </div>
+              <h3>Trouvez la voiture idéale</h3>
+              <p>
+                Parcourez notre sélection de voitures disponibles près de chez
+                vous
+              </p>
+            </div>
+            <div class="step">
+              <div class="step-icon">
+                <i class="far fa-calendar-alt"></i>
+              </div>
+              <h3>Réservez en quelques clics</h3>
+              <p>Choisissez vos dates et réservez instantanément</p>
+            </div>
+            <div class="step">
+              <div class="step-icon">
+                <i class="fas fa-car"></i>
+              </div>
+              <h3>Prenez la route</h3>
+              <p>Profitez de votre trajet et ramenez la voiture à la fin</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="popular-cars">
+        <div class="container">
+          <div class="section-header">
+            <h2>Voitures populaires</h2>
+            <a href="recherche" class="view-all">Voir toutes les voitures</a>
+          </div>
+
+          <div class="car-grid">
+            <% cars.forEach(car => { %>
+            <div class="car-card">
+              <div class="car-image">
+                <img src="<%=car.carImg[0] %>" alt="My Image" />
+                <span class="rating"
+                  ><i class="fas fa-star"></i> <span>4.8</span></span
+                >
+              </div>
+              <div class="car-details">
+                <h3><%= `${car.marque} ${car.modele}` %></h3>
+                <p class="location">
+                  <i class="fas fa-map-marker-alt"></i> <%=car.location%>
+                  (<%=car.kilometrage %> km)
+                </p>
+                <div class="car-footer">
+                  <span class="price">
+                    <%=car.prix %> DA
+                    <span class="period">/ jour</span></span
+                  >
+                  <button
+                    class="btn-reserve"
+                    onclick="window.location.href='/annonce/<%=car._id%>'"
+                  >
+                    Réserver
+                  </button>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+      </section>
+
+      <section class="app-download">
+        <div class="container">
+          <div class="app-content">
+            <h2>Téléchargez l'application</h2>
+            <p>
+              Trouvez, réservez et louez des voitures directement depuis votre
+              smartphone. Notre application vous permet de gérer votre location
+              de A à Z.
+            </p>
+          </div>
+          <div class="app-image">
+            <div class="app-circle"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="container">
+          <div class="footer-columns">
+            <div class="footer-column">
+              <h3>À propos</h3>
+              <ul>
+                <li><a href="/upcomming">Qui sommes-nous</a></li>
+                <li><a href="/upcomming">Comment ça marche</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h3>Louer une voiture</h3>
+              <ul>
+                <li><a href="/upcomming">Comment louer</a></li>
+                <li><a href="/upcomming">Assurance</a></li>
+                <li><a href="/upcomming">Assistance routière</a></li>
+                <li><a href="/upcomming">FAQ location</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h3>Mettre sa voiture en location</h3>
+              <ul>
+                <li><a href="/upcomming">Devenir propriétaire</a></li>
+                <li><a href="/upcomming">Combien gagner</a></li>
+                <li><a href="/upcomming">Assurance propriétaire</a></li>
+                <li><a href="/upcomming">FAQ propriétaire</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h3>Contact</h3>
+              <ul>
+                <li><a href="/aide">Aide & support</a></li>
+                <li><a href="/upcomming">Nous contacter</a></li>
+                <li><a href="/upcomming">Blog</a></li>
+              </ul>
+              <div class="social-icons">
+                <a href="/upcomming"><i class="fab fa-twitter"></i></a>
+                <a href="/upcomming"><i class="fab fa-facebook-f"></i></a>
+                <a href="/upcomming"><i class="fab fa-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <div class="footer-logo">
+              <a href="/"><span>CarShare</span></a>
+            </div>
+            <div class="footer-links">
+              <a href="/upcomming">Conditions d'utilisation</a>
+              <a href="/upcomming">Politique de confidentialité</a>
+              <a href="/upcomming">Cookies</a>
+            </div>
+          </div>
+
+          <div class="copyright">
+            <p>&copy; 2025 - CarShare. Tous droits réservés.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="/js/script.js"></script>
+  </body>
+</html>

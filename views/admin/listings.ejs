@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarShare Admin - Gestion Annonces</title>
+    <link rel="stylesheet" href="/css/admin/listings.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <%- include('adminAsideBar.ejs',{active : "annonce"}) %>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="search-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" placeholder="Rechercher..." class="search-input">
+                </div>
+                <div class="header-actions">
+                    <div class="notification-bell">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        <span class="notification-badge">1</span>
+                    </div>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <span class="user-name">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <div class="listings-page">
+                    <div class="page-header">
+                        <h2>Gestion des Annonces</h2>
+                        <div class="filter-actions">
+                            <div class="search-filter">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <input type="text" placeholder="Rechercher une annonce..." class="filter-input">
+                            </div>
+                            <div class="status-filter">
+                                <select class="status-select">
+                                    <option value="all">Tous les statuts</option>
+                                    <option value="active">Actif</option>
+                                    <option value="pending">En attente</option>
+                                    <option value="rejected">Rejeté</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Véhicule</th>
+                                    <th>Propriétaire</th>
+                                    <th>Prix/jour</th>
+                                    <th>Date de publication</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% cars.forEach(car => { %>
+                                    <tr>
+                                        <td>
+                                            <div class="car-info">
+                                                <div class="car-image">
+                                                    <img src="<%=car.carImg[0]%>" alt="<%=`${car.marque} ${car.modele}`%>">
+                                                </div>
+                                                <div class="car-details">
+                                                    <div class="car-name"><%=`${car.marque} ${car.modele}`%></div>
+                                                    <div class="car-location"><%=car.location%></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><%=`${car.ownerAccount.nom} ${car.ownerAccount.prenom}`%></td>
+                                        <td><%=car.prix%>DA</td>
+                                        <td><%=car.createdAt%></td>
+                                        <% if (car.status === "publiee") { %>
+                                            <td><span class="status-badge active">Actif</span></td>
+                                        <% } else if (car.status === "en_attente") {%>
+                                        <td><span class="status-badge pending">En attente</span></td>
+                                        <% } else { %>
+                                        <td><span class="status-badge rejected">Rejeté</span></td>
+                                        <% } %>
+                                          
+
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="voirButton action-btn view" data-carId ="<%=car._id%>">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                    Voir
+                                                </button>
+                                        <% if (car.status === "publiee") { %>
+                                            <button class="action-btn danger" data-carId="<%=car._id %>" >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                                    Désactiver
+                                            </button>
+                                        <% } else if (car.status === "en_attente") {%>
+                                            <button class="action-btn success" data-carId="<%=car._id %>" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                                Approuver
+                                            </button>
+                                            <button class="action-btn reject" data-carId="<%=car._id %>" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                                Rejeter
+                                            </button>
+                                        <% } else { %>
+                                            <button class="action-btn success" data-carId="<%=car._id %>" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                                Approuver
+                                            </button>
+                                        <% } %>
+                                            
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                                <!-- <tr>
+                               
+                                            <button class="action-btn view">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                Voir
+                                            </button>
+                                            <button class="action-btn success">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                                Approuver
+                                            </button>
+                                            <button class="action-btn reject">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                                Rejeter
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="car-info">
+                                            <div class="car-image">
+                                                <img src="https://via.placeholder.com/50" alt="Citroën C3">
+                                            </div>
+                                            <div class="car-details">
+                                                <div class="car-name">Citroën C3</div>
+                                                <div class="car-location">Marseille, France</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Jean Dupont</td>
+                                    <td>40€</td>
+                                    <td>12/03/2023</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                Voir
+                                            </button>
+                                            <button class="action-btn success">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                                Approuver
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="car-info">
+                                            <div class="car-image">
+                                                <img src="https://via.placeholder.com/50" alt="Volkswagen Golf">
+                                            </div>
+                                            <div class="car-details">
+                                                <div class="car-name">Volkswagen Golf</div>
+                                                <div class="car-location">Bordeaux, France</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Marie Leroy</td>
+                                    <td>60€</td>
+                                    <td>28/05/2023</td>
+                                    <td><span class="status-badge active">Actif</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                Voir
+                                            </button>
+                                            <button class="action-btn danger">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                                Désactiver
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="car-info">
+                                            <div class="car-image">
+                                                <img src="https://via.placeholder.com/50" alt="Toyota Yaris">
+                                            </div>
+                                            <div class="car-details">
+                                                <div class="car-name">Toyota Yaris</div>
+                                                <div class="car-location">Lille, France</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Pierre Moreau</td>
+                                    <td>50€</td>
+                                    <td>10/02/2023</td>
+                                    <td><span class="status-badge pending">En attente</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                Voir
+                                            </button>
+                                            <button class="action-btn success">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                                Approuver
+                                            </button>
+                                            <button class="action-btn reject">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                                Rejeter
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal pour voir les détails de l'annonce -->
+    <% if (model !== null) { %>
+     <div class="modal active" id="listingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Détails de l'annonce</h3>
+                <button class="close-modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="listing-details">
+                    <div class="listing-images">
+                        <img src="<%=model.carImg[0]%>" alt="Car Image" class="main-image">
+                        <div class="thumbnail-images" style="display: flex; flex-wrap: wrap; gap: 5px;">
+                            <img src="<%=model.cartGris%>" alt="cartGris" style="width: 100px; height: 100px; object-fit: cover;">
+                            <img src="<%=model.permis%>" alt="permis" style="width: 100px; height: 100px; object-fit: cover;">
+                            <%model.carImg.slice(1).forEach(image => { %>
+                                <img src="<%=image%>" alt="Car Image" style="width: 100px; height: 100px; object-fit: cover;">
+                            <% }) %>
+                        </div>
+                    </div>
+                    <div class="listing-info" style="width: 50%;">
+                        <h4 class="car-title"><%=`${model.marque} ${model.modele}`%></h4>
+                        <div class="car-meta">
+                            <div class="meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span><%=model.Annee%></span>
+                            </div>
+                            <div class="meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                <span><%=model.Carburant%></span>
+                            </div>
+                            <div class="meta-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 0 1 16 0c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                <span><%model.location%></span>
+                            </div>
+                        </div>
+                        <div class="car-description">
+                            <h5>Description</h5>
+                            <p><%=model.Description%></p>
+                        </div>
+                        <div class="car-features">
+                            <h5>Caractéristiques</h5>
+                            <ul>
+                                <% model.Caracteristiques.forEach(ele => { %>
+                                    <li><%=ele%></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                        <div class="owner-info">
+                            <h5>Propriétaire</h5>
+                            <div class="owner-profile">
+                                <div class="owner-avatar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                </div>
+                                <div class="owner-details">
+                                    <div class="owner-name"><%=`${model.ownerAccount.nom} ${model.ownerAccount.prenom}`%></div>
+                                    <div class="owner-rating">
+                                        <span class="stars">
+                                            <%=`${'★'.repeat(model.rating)}☆`%>
+                                        </span>
+                                        <span class="rating-count">(12 avis)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel">Fermer</button>
+                <% if (model.status === "publiee") { %>
+                    <button class="modal-btn disable" data-carId="<%=model._id%>">Disable</button>
+                <% } %>
+                <% if (model.status === "en_attente" ) { %>
+                    <button class="modal-btn reject" data-carId="<%=model._id%>">Rejeter</button>
+                <% } %>
+                <% if (["refusée" , "en_attente"].includes(model.status)) { %>
+                    <button class="modal-btn approve" data-carId="<%=model._id%>">Approuver</button>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <script src="/js/admin/admin.js"></script>
+</body>
+</html>

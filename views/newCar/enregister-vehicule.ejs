@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Enregistrer ma voiture</title>
+    <link rel="stylesheet" href="/css/enregistrer.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <% if (!isLogged) { %>
+          <%- include('../components/navbar') %>      
+      <% } else if (!user.est_proprietaire) { %>
+          <%- include('../components/navbarLocataire.ejs') %>     
+      <% } else { %>
+          <%- include('../components/navbarProprietaire.ejs') %>     
+      <% } %>
+
+      <main>
+        <div class="container">
+          <div class="register-content">
+            <h1>Enregistrer ma voiture</h1>
+            <p class="subtitle">
+              Partagez les détails de votre véhicule pour commencer à le louer
+            </p>
+
+            <div class="progress-bar">
+              <div class="step active">
+                <div class="step-number">
+                  <span>1</span>
+                </div>
+                <p>Informations véhicule</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>2</span>
+                </div>
+                <p>Documents</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>3</span>
+                </div>
+                <p>Photos</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>4</span>
+                </div>
+                <p>Options & Services</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>5</span>
+                </div>
+                <p>Tarification</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>6</span>
+                </div>
+                <p>Confirmation</p>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <h2>Informations sur le véhicule</h2>
+
+              <!-- id="vehicle-form" -->
+              <form id="gotoSecondPage">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="marque">Marque</label>
+                    <div class="autocomplete-container">
+                      <input
+                        type="text"
+                        id="marque"
+                        name="marque"
+                        placeholder="Entrez une marque"
+                        autocomplete="off"
+                        required
+                      />
+                      <div
+                        class="autocomplete-dropdown"
+                        id="marque-suggestions"
+                      ></div>
+                      <i class="fas fa-chevron-down"></i>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="modele">Modèle</label>
+                    <input
+                      type="text"
+                      id="modele"
+                      name="modele"
+                      placeholder="Ex: Clio, 308, Golf..."
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="annee">Année</label>
+                    <input
+                      type="text"
+                      id="annee"
+                      name="annee"
+                      placeholder="Ex: 2018"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="kilometrage">Kilométrage</label>
+                    <div class="input-with-suffix">
+                      <input
+                        type="text"
+                        id="kilometrage"
+                        name="kilometrage"
+                        placeholder="Ex: 45000"
+                        required
+                      />
+                      <span class="suffix">km</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="ville">Ville</label>
+                    <input
+                      type="text"
+                      id="ville"
+                      name="ville"
+                      placeholder="Ex: 16- Alger"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    rows="5"
+                    placeholder="Décrivez votre véhicule (état, équipements, particularités...)"
+                  ></textarea>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn-next">
+                    Suivant <i class="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/js/newCar/enregistrer.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>

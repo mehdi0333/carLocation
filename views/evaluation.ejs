@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarShare - Tableau de bord</title>
+    <link rel="stylesheet" href="evaluation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="#">CarShare</a>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="#">Mes réservations</a></li>
+                <li><a href="#">Aide</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <button class="notification-btn">
+                <i class="fa-regular fa-bell"></i>
+            </button>
+            <button class="profile-btn">
+                <i class="fa-regular fa-user"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Tableau de bord</h1>
+            <button class="btn-primary">
+                <i class="fa-solid fa-car"></i>
+                Louer une voiture
+            </button>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-car"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-label">Locations totales</div>
+                    <div class="stat-value">12</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-label">Location en cours</div>
+                    <div class="stat-value">1</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-road"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-label">Km parcourus</div>
+                    <div class="stat-value">1 450</div>
+                </div>
+            </div>
+        </div>
+
+        <section class="current-rental">
+            <h2>Location en cours</h2>
+            <div class="rental-card">
+                <div class="rental-image">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Container%20%2811%29-CxlxvLQz3qlqO46KzvfAzjS4tM5dWM.png" alt="Citroën C3">
+                </div>
+                <div class="rental-details">
+                    <h3>citroen c3</h3>
+                    <div class="rental-info">
+                        <div class="info-item">
+                            <i class="fa-regular fa-calendar"></i>
+                            <span>Du 15 juin 2023 au 18 juin 2023</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Alger, 16000</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-regular fa-clock"></i>
+                            <span>Temps restant: 2 jours</span>
+                        </div>
+                    </div>
+                    <div class="rental-actions">
+                        <button class="btn-secondary">Prolonger</button>
+                        <button class="btn-outline">Contacter le propriétaire</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="rental-history">
+            <h2>Historique des locations</h2>
+            <table class="rental-table">
+                <thead>
+                    <tr>
+                        <th>Voiture</th>
+                        <th>Dates</th>
+                        <th>Lieu</th>
+                        <th>Prix</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Peugeot 208</td>
+                        <td>10 mai - 12 mai 2023</td>
+                        <td>Oran</td>
+                        <td>12000 DZD</td>
+                        <td>
+                            <span class="rating-badge">
+                                <i class="fa-solid fa-star"></i> Évalué
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Citroën C3</td>
+                        <td>1 avril - 3 avril 2023</td>
+                        <td>Alger</td>
+                        <td>10500 DZD</td>
+                        <td>
+                            <button class="btn-rate" id="openRatingModal">Évaluer</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Volkswagen Golf</td>
+                        <td>15 mars - 20 mars 2023</td>
+                        <td>Adrar</td>
+                        <td>28000 DZD</td>
+                        <td>
+                            <span class="rating-badge">
+                                <i class="fa-solid fa-star"></i> Évalué
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Modal d'évaluation -->
+    <div class="modal" id="ratingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Évaluer votre expérience</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="vehicle-info">
+                    <h4>Citroën C3</h4>
+                    <p>1 avril - 3 avril 2023</p>
+                </div>
+                <div class="rating-section">
+                    <p>Comment évaluez-vous cette location?</p>
+                    <div class="star-rating">
+                        <i class="fa-regular fa-star" data-rating="1"></i>
+                        <i class="fa-regular fa-star" data-rating="2"></i>
+                        <i class="fa-regular fa-star" data-rating="3"></i>
+                        <i class="fa-regular fa-star" data-rating="4"></i>
+                        <i class="fa-regular fa-star" data-rating="5"></i>
+                    </div>
+                </div>
+                <div class="comment-section">
+                    <label for="comment">Laissez un commentaire (optionnel)</label>
+                    <textarea id="comment" rows="4" placeholder="Partagez votre expérience avec cette voiture..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" id="cancelRating">Annuler</button>
+                <button class="btn-primary" id="submitRating">Soumettre</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="evaluation.js"></script>
+</body>
+</html>

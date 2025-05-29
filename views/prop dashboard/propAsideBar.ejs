@@ -1,0 +1,59 @@
+<aside class="sidebar">
+  <div class="logo">
+    <h1 onclick="window.location.href='/'" style="cursor: pointer">CarShare</h1>
+    <p>Espace propriétaire</p>
+  </div>
+
+  <nav class="menu">
+    <a
+      href="dashboard-proprietaire"
+      class="menu-item <%= active === 'main' ? 'active' : '' %>"
+    >
+      <i class="fas fa-th-large"></i>
+      <span>Tableau de bord</span>
+    </a>
+    <a
+      href="mes-vehicules"
+      class="menu-item <%= active === 'car' ? 'active' : '' %>"
+    >
+      <i class="fas fa-car"></i>
+      <span>Mes véhicules</span>
+    </a>
+    <a
+      href="disponibilite"
+      class="menu-item <%= active === 'disponibilite' ? 'active' : '' %>"
+    >
+      <i class="far fa-calendar-alt"></i>
+      <span>Disponibilité</span>
+    </a>
+    <a
+      href="reservations"
+      class="menu-item <%= active === 'reservations' ? 'active' : '' %>"
+    >
+      <i class="fas fa-book"></i>
+      <span>Réservations</span>
+    </a>
+    <a href="/chat" class="menu-item">
+      <i class="far fa-comment-alt"></i>
+      <span>Messages</span>
+    </a>
+    <a
+      href="revenus"
+      class="menu-item <%= active === 'revenus' ? 'active' : '' %>"
+    >
+      <i class="fas fa-chart-line"></i>
+      <span>Revenus</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="/aide" class="menu-item">
+      <i class="fas fa-question-circle"></i>
+      <span>Aide</span>
+    </a>
+    <a href="/logout" class="menu-item">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>

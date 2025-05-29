@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Documents</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/enregistrer.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <% if (!isLogged) { %> <%- include('../components/navbar') %> <% } else if
+      (!user.est_proprietaire) { %> <%-
+      include('../components/navbarLocataire.ejs') %> <% } else { %> <%-
+      include('../components/navbarProprietaire.ejs') %> <% } %>
+
+      <main>
+        <div class="container">
+          <div class="register-content">
+            <h1>Enregistrer ma voiture</h1>
+            <p class="subtitle">
+              Partagez les détails de votre véhicule pour commencer à le louer
+            </p>
+
+            <div class="progress-bar">
+              <div class="step completed">
+                <div class="step-number">
+                  <i class="fas fa-check"></i>
+                </div>
+                <p>Informations véhicule</p>
+              </div>
+              <div class="step active">
+                <div class="step-number">
+                  <span>2</span>
+                </div>
+                <p>Documents</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>3</span>
+                </div>
+                <p>Photos</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>4</span>
+                </div>
+                <p>Options & Services</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>5</span>
+                </div>
+                <p>Tarification</p>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <span>6</span>
+                </div>
+                <p>Confirmation</p>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <h2>Documents obligatoires</h2>
+
+              <form id="documents-form" data-carId="<%= car._id %>">
+                <div class="document-upload">
+                  <div class="document-icon">
+                    <i class="fas fa-file-alt"></i>
+                  </div>
+                  <div class="document-info">
+                    <h3>Carte grise du véhicule</h3>
+                    <p>
+                      Téléchargez une photo ou un scan lisible de votre carte
+                      grise
+                    </p>
+                  </div>
+                </div>
+
+                <div class="upload-area">
+                  <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                  </div>
+                  <p>
+                    Cliquez pour télécharger
+                    <span class="or-text">ou glissez-déposez</span>
+                  </p>
+                  <p class="file-types">PNG, JPG ou PDF (Max. 5MB)</p>
+                  <input
+                    type="file"
+                    id="carte-grise"
+                    name="carte-grise"
+                    accept=".png,.jpg,.jpeg,.pdf"
+                    class="file-input"
+                    value="<%= car.cartGris ? car.cartGris : '' %>"
+                  />
+                  <img
+                    src="<%= car.cartGris ? car.cartGris : '' %>"
+                    alt=""
+                    id="carte-grise-preview"
+                  />
+                </div>
+
+                <div class="document-upload">
+                  <div class="document-icon">
+                    <i class="fas fa-id-card"></i>
+                  </div>
+                  <div class="document-info">
+                    <h3>Permis de conduire</h3>
+                    <p>
+                      Téléchargez une photo ou un scan lisible de votre permis
+                      de conduire
+                    </p>
+                  </div>
+                </div>
+
+                <div class="upload-area">
+                  <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                  </div>
+                  <p>
+                    Cliquez pour télécharger
+                    <span class="or-text">ou glissez-déposez</span>
+                  </p>
+                  <p class="file-types">PNG, JPG ou PDF (Max. 5MB)</p>
+                  <input
+                    type="file"
+                    id="permis"
+                    name="permis"
+                    accept=".png,.jpg,.jpeg,.pdf"
+                    class="file-input"
+                    value="<%= car.permis ? car.permis : '' %>"
+                  />
+                  <img
+                    src="<%= car.permis ? car.permis : '' %>"
+                    alt=""
+                    id="permis-preview"
+                  />
+                </div>
+
+                <div class="form-actions">
+                  <button
+                    type="button"
+                    class="btn-prev"
+                    onclick="window.location.href='/edit/enregister-vehicule/<%= car._id %>'"
+                  >
+                    <i class="fas fa-arrow-left"></i> Précédent
+                  </button>
+                  <button type="submit" class="btn-next">
+                    Suivant <i class="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="/js/script.js"></script>
+    <script src="/js/editCar/enregistrer-document.js"></script>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Inscription</title>
+    <link rel="stylesheet" href="/css/auth.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="page-wrapper inscription-page">
+      <%- include('./components/navbar.ejs') %>
+
+      <main>
+        <div class="container">
+          <div class="auth-content">
+            <h1>Rejoignez CarShare aujourd'hui</h1>
+            <p class="subtitle">
+              Créez votre compte en quelques minutes et commencez à louer des
+              voitures
+            </p>
+
+            <div class="auth-card">
+              <h2>Créer un compte</h2>
+
+              <form class="auth-form" action="/register" method="POST">
+                <div class="form-row">
+                  <div class="form-group <%= prenom !== '' ? 'error' : '' %>">
+                    <label for="prenom">Prénom</label>
+                    <input
+                      value="<%= values.prenom %>"
+                      type="text"
+                      id="prenom"
+                      name="prenom"
+                      required
+                    />
+                    <% if (prenom !== '') { %>
+                    <div class="error-message"><%= prenom %></div>
+                    <% } %>
+                  </div>
+                  <div class="form-group <%= nom !== '' ? 'error' : '' %>">
+                    <label for="nom">Nom</label>
+                    <input
+                      type="text"
+                      value="<%= values.nom %>"
+                      id="nom"
+                      name="nom"
+                      required
+                    />
+                    <% if (nom !== '') { %>
+                    <div class="error-message"><%= nom %></div>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="form-group <%= email !== '' ? 'error' : '' %>">
+                  <label for="email">Email</label>
+                  <input
+                    type="email"
+                    value="<%= values.email %>"
+                    id="email"
+                    name="email"
+                    required
+                  />
+                  <% if (email !== '') { %>
+                  <div class="error-message"><%= email %></div>
+                  <% } %>
+                </div>
+
+                <div class="form-group <%= telephone!== '' ? 'error' : '' %>">
+                  <label for="telephone">Téléphone</label>
+                  <input
+                    type="tel"
+                    value="<%= values.telephone%>"
+                    id="telephone"
+                    name="telephone"
+                    required
+                  />
+                  <% if (telephone!== '') { %>
+                  <div class="error-message"><%= telephone%></div>
+                  <% } %>
+                </div>
+
+                <div class="form-group <%= password !== '' ? 'error' : '' %>">
+                  <label for="password">Mot de passe</label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value="<%= values.password %>"
+                    required
+                  />
+                  <% if (password !== '') { %>
+                  <div class="error-message"><%= password %></div>
+                  <% } %>
+                </div>
+
+                <div
+                  class="form-group <%= confirmPassword !== '' ? 'error' : '' %>"
+                >
+                  <label for="confirm-password"
+                    >Confirmer le mot de passe</label
+                  >
+                  <input
+                    type="password"
+                    id="confirm-password"
+                    name="confirmPassword"
+                    value="<%= values.confirmPassword %>"
+                    required
+                  />
+                  <% if (confirmPassword !== '') { %>
+                  <div class="error-message"><%= confirmPassword %></div>
+                  <% } %>
+                </div>
+
+                <div class="form-group checkbox">
+                  <input
+                    type="checkbox"
+                    id="accept-terms"
+                    name="accept-terms"
+                    required
+                  />
+                  <label for="accept-terms"
+                    >J'accepte les
+                    <a href="#" class="text-link"> conditions d'utilisation </a>
+                  </label>
+                </div>
+
+                <button type="submit" class="btn-auth" id="btn-auth">
+                  S'inscrire
+                </button>
+
+                <div class="auth-footer">
+                  <p>
+                    Déjà un compte?
+                    <a href="connexion" class="text-link">Se connecter</a>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="container">
+          <p class="copyright">© 2025 CarShare. Tous droits réservés.</p>
+        </div>
+      </footer>
+    </div>
+    <script src="/js/inscription.js"></script>
+  </body>
+</html>

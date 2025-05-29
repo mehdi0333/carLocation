@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare - Disponibilité</title>
+    <link rel="stylesheet" href="/css/prop dashboard/disponibilite.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <%- include('propAsideBar.ejs',{active : "disponibilite" }) %>
+
+      <main class="main-content">
+        <header class="header">
+          <div class="header-title">
+            <h2>Disponibilité</h2>
+          </div>
+          <%- include('propNavBar.ejs',{user}) %>
+        </header>
+
+        <div class="availability-content">
+          <div class="availability-header">
+            <h2>Disponibilité</h2>
+            <button class="btn-primary">Gérer la disponibilité</button>
+          </div>
+
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <div class="month-navigation">
+                <button class="btn-nav prev" id="prev-month">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <h3 id="current-month">Juin 2023</h3>
+                <button class="btn-nav next" id="next-month">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="calendar">
+              <div class="calendar-weekdays">
+                <div>Lun</div>
+                <div>Mar</div>
+                <div>Mer</div>
+                <div>Jeu</div>
+                <div>Ven</div>
+                <div>Sam</div>
+                <div>Dim</div>
+              </div>
+              <div class="calendar-days" id="calendar-days"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="/js/prop dashboard/proprietaire.js"></script>
+  </body>
+</html>

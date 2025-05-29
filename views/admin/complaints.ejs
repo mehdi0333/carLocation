@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarShare Admin - Plaintes</title>
+    <link rel="stylesheet" href="/css/admin/complaints.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <%- include('adminAsideBar.ejs',{active : "plaintes"}) %>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+          <div class="search-container">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="text"
+              placeholder="Rechercher..."
+              class="search-input"
+            />
+          </div>
+          <div class="header-actions">
+            <div class="notification-bell">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="notification-badge">1</span>
+            </div>
+            <%- include('adminNavBar.ejs') %>
+          </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="page-content">
+          <div class="complaints-page">
+            <div class="page-header">
+              <h2>Gestion des Plaintes</h2>
+              <div class="filter-actions">
+                <div class="search-filter">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Rechercher une plainte..."
+                    class="filter-input"
+                  />
+                </div>
+                <div class="status-filter">
+                  <select class="status-select">
+                    <option value="all">Tous les statuts</option>
+                    <option value="new">Nouveau</option>
+                    <option value="in-progress">En cours</option>
+                    <option value="resolved">Résolu</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="data-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Sujet</th>
+                    <th>Utilisateur</th>
+                    <th>Date</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% plaints.forEach(plaint => { %>
+                  <tr>
+                    <td><%=plaint.sujet%></td>
+                    <td>
+                      <%=`${plaint.userInformation.nom}
+                      ${plaint.userInformation.prenom}`%>
+                    </td>
+                    <td>
+                      <%=`${plaint.createdAt.getDate()}/${plaint.createdAt.getMonth()+1}/${plaint.createdAt.getFullYear()}`%>
+                    </td>
+                    <% if (plaint.statut ==="En attente") { %>
+                    <td>
+                      <span class="status-badge in-progress">En attente</span>
+                    </td>
+                    <% } else { %>
+                    <td>
+                      <span class="status-badge resolved">solve</span>
+                    </td>
+                    <% } %>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="action-btn view">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path
+                              d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                            ></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                          </svg>
+                          Voir
+                        </button>
+                        <button class="action-btn process">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M12 20h9"></path>
+                            <path
+                              d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+                            ></path>
+                          </svg>
+                          Traiter
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal pour voir les détails de la plainte -->
+    <div class="modal" id="complaintModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Détails de la plainte</h3>
+          <button class="close-modal">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="complaint-details">
+            <div class="complaint-header">
+              <div class="complaint-id">#PL-001</div>
+              <div class="complaint-status">
+                <span class="status-badge new">Nouveau</span>
+              </div>
+            </div>
+            <div class="complaint-subject">
+              <h4>Problème de facturation</h4>
+              <div class="complaint-date">Créé le 15/04/2023</div>
+            </div>
+            <div class="user-info">
+              <h5>Utilisateur</h5>
+              <div class="user-profile-info">
+                <div class="user-avatar">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </div>
+                <div class="user-details">
+                  <div class="user-name">Thomas Martin</div>
+                  <div class="user-email">thomas.martin@example.com</div>
+                  <div class="user-phone">+33 6 12 34 56 78</div>
+                </div>
+              </div>
+            </div>
+            <div class="complaint-description">
+              <h5>Description</h5>
+              <p>
+                J'ai été facturé deux fois pour ma dernière location. La
+                première transaction a été effectuée le 10/04/2023 pour un
+                montant de 120€, puis une seconde transaction identique a été
+                prélevée le 12/04/2023. Je demande le remboursement de la
+                seconde transaction qui semble être une erreur.
+              </p>
+            </div>
+            <div class="complaint-attachments">
+              <h5>Pièces jointes</h5>
+              <div class="attachment-files">
+                <div class="attachment-file">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    ></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <span>releve_bancaire.pdf</span>
+                </div>
+                <div class="attachment-file">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    ></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <span>facture_location.pdf</span>
+                </div>
+              </div>
+            </div>
+            <div class="complaint-messages">
+              <h5>Messages</h5>
+              <div class="message-list">
+                <div class="message">
+                  <div class="message-header">
+                    <div class="message-sender">Thomas Martin</div>
+                    <div class="message-time">15/04/2023 10:30</div>
+                  </div>
+                  <div class="message-content">
+                    <p>
+                      Bonjour, je vous contacte au sujet d'un problème de double
+                      facturation. Pourriez-vous vérifier et me rembourser le
+                      montant prélevé en trop ? Merci d'avance.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="message-form">
+                <h5>Ajouter un message</h5>
+                <textarea placeholder="Votre message..."></textarea>
+                <button class="send-message">Envoyer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn cancel">Fermer</button>
+          <button class="modal-btn process">Traiter</button>
+          <button class="modal-btn resolve">Résoudre</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/admin/admin.js"></script>
+  </body>
+</html>
