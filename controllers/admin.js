@@ -1,7 +1,7 @@
 import { Plainte, Reservation, User, Car, Admin } from "../models/models.js";
 export async function gotoAdminPage(req, res) {
   try {
-    const { user, userId, isLogged } = req;
+    const { user } = req;
     // * get users length
     let users = await User.find();
     users = users.length;
@@ -10,9 +10,44 @@ export async function gotoAdminPage(req, res) {
     cars = cars.length;
     // ! get litige length
     const litiges = 0;
-    // ! get plaints length
-    const plaints = 0;
-    res.render("admin/dashboard", { user, users, cars, litiges, plaints });
+    // * get plaints length
+    const plaints = await Plainte.find();
+    // * get notifications
+    let annonce = await Car.find({ status: "en_attente" });
+    for (let ele of annonce) {
+      const user = await User.findById(ele.userId);
+      ele.user = user;
+    }
+    // * get plaints en cours
+    const plaintsEnCours = await Plainte.find({
+      statut: "En attente",
+    });
+    for (let ele of plaintsEnCours) {
+      const user = await User.findById(ele.userId);
+      ele.user = user;
+    }
+    // * get new users
+    const newUsers = await User.find({
+      statut_compte: "en_attente",
+    });
+    // * get notifications
+    const notifications = {
+      annonce: annonce.length,
+      plaints: plaintsEnCours.length,
+      users: newUsers.length,
+    };
+    // * render the admin dashboard
+    res.render("admin/dashboard", {
+      user,
+      users,
+      cars,
+      litiges,
+      plaints,
+      notifications,
+      annonce,
+      newUsers,
+      plaintsEnCours,
+    });
   } catch (error) {
     console.log(error);
     res.render("500");
@@ -140,7 +175,7 @@ export async function reservationDetail(req, res) {
     duration /= 60;
     duration /= 60;
     duration /= 24;
-    reservation.duration = duration
+    reservation.duration = duration;
     if (!reservationUser) res.render("400");
     const car = await Car.findById(reservation.carId);
     if (!car) return res.render("400");

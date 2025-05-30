@@ -201,7 +201,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="stat-value"><%=plaints%></div>
+                <div class="stat-value"><%=plaints.length%></div>
                 <!-- <div class="stat-change positive">
                   +2% <span class="stat-period">vs mois précédent</span>
                 </div> -->
@@ -257,58 +257,65 @@
                 </div>
                 <div class="action-list">
                   <div class="action-item">
-                    <div class="action-text">Annonces à valider</div>
-                    <div class="action-count purple">12</div>
+                    <div class="action-text">Utilisateurs à activer</div>
+                    <div class="action-count purple">
+                      <%= notifications.users %>
+                    </div>
                   </div>
                   <div class="action-item">
-                    <div class="action-text">Litiges à traiter</div>
-                    <div class="action-count purple">5</div>
+                    <div class="action-text">Annonces à valider</div>
+                    <div class="action-count purple">
+                      <%= notifications.annonce %>
+                    </div>
                   </div>
+
                   <div class="action-item">
                     <div class="action-text">Plaintes à gérer</div>
-                    <div class="action-count purple">8</div>
+                    <div class="action-count purple">
+                      <%= notifications.plaints %>
+                    </div>
                   </div>
                 </div>
 
                 <div class="recent-activities">
                   <h4>Activités récentes</h4>
+                  <% if (newUsers.length > 0) { %> <% newUsers.forEach(ele => {
+                  %>
                   <div class="activity-item">
                     <div class="activity-content">
                       <div class="activity-title">
                         Nouvel utilisateur inscrit
                       </div>
-                      <div class="activity-user">Sophie Dubois</div>
+                      <div class="activity-user">
+                        <%= ` ${ele.nom} ${ele.prenom}` %>
+                      </div>
                     </div>
-                    <div class="activity-time">il y a 5 minutes</div>
+                    <!-- <div class="activity-time"><il y a 5 minutes></div> -->
                   </div>
+
+                  <% }) %> <% } %> <%if(notifications.annonce > 0){%> <%
+                  annonce.forEach(ele => { %>
                   <div class="activity-item">
                     <div class="activity-content">
                       <div class="activity-title">Nouvelle annonce publiée</div>
-                      <div class="activity-user">Thomas Martin</div>
+                      <div class="activity-user">
+                        <%= ` ${ele.user.nom} ${ele.user.prenom}` %>
+                      </div>
                     </div>
-                    <div class="activity-time">il y a 10 minutes</div>
+                    <!-- <div class="activity-time"><il y a 10 minutes></div> -->
                   </div>
-                  <div class="activity-item">
-                    <div class="activity-content">
-                      <div class="activity-title">Litige résolu</div>
-                      <div class="activity-user">Admin</div>
-                    </div>
-                    <div class="activity-time">il y a 30 minutes</div>
-                  </div>
-                  <div class="activity-item">
-                    <div class="activity-content">
-                      <div class="activity-title">Annonce validée</div>
-                      <div class="activity-user">Admin</div>
-                    </div>
-                    <div class="activity-time">il y a 45 minutes</div>
-                  </div>
+                  <% }) %> <%}%> <%if(notifications.plaints > 0){%> <%
+                  plaintsEnCours.forEach(ele => { %>
                   <div class="activity-item">
                     <div class="activity-content">
                       <div class="activity-title">Plainte traitée</div>
-                      <div class="activity-user">Admin</div>
+                      <div class="activity-user">
+                        <%= ` ${ele.user.nom} ${ele.user.prenom}` %>
+                      </div>
                     </div>
-                    <div class="activity-time">il y a 1 heure</div>
+                    <!-- <div class="activity-time"><il y a 30 minutes></div> -->
                   </div>
+                  <% }) %> <%}%>
                 </div>
               </div>
             </div>
