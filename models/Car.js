@@ -12,8 +12,6 @@ const carSchema = new mongoose.Schema(
     Description: {
       type: String,
     },
-
-    // Technical specifications
     Carburant: {
       type: String,
       default: "Essence",

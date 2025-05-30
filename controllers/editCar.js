@@ -26,7 +26,18 @@ export async function editCarInformation(req, res) {
 export async function submitCarInformation(req, res) {
   try {
     const { user, userId, isLogged } = req;
-    const { carId, marque, modele, annee, kilometrage, description } = req.body;
+    const {
+      carId,
+      marque,
+      modele,
+      annee,
+      kilometrage,
+      description,
+      transmission,
+      Carburant,
+      type,
+      Plcaces,
+    } = req.body;
     const car = await Car.findById(carId);
     if (!car) return res.render("404");
     // Check if the user is authorized to edit this car
@@ -39,8 +50,13 @@ export async function submitCarInformation(req, res) {
       car.kilometrage = kilometrage;
     if (description && car.Description !== description)
       car.Description = description;
-
-    await car.save();
+    if (transmission && car.transmission !== transmission)
+      car.transmission = transmission;
+    if (Carburant && car.Carburant !== Carburant)
+      car.Carburant = Carburant;
+    if (type && car.type !== type) car.type = type;
+    if (Plcaces && car.Places !== Plcaces) car.Places = Plcaces;
+    await car.save(); 
     res.redirect(`/edit/enregistrer-document/${carId}`);
   } catch (error) {
     console.error("Error rendering new car page:", error);
