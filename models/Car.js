@@ -18,6 +18,14 @@ const carSchema = new mongoose.Schema(
       type: String,
       default: "Essence",
     },
+    type: {
+      type: String,
+      default: "citadine",
+    },
+    transmission: {
+      type: String,
+      default: "manuelle",
+    },
     cardGris: {
       type: String,
     },

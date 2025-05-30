@@ -67,7 +67,7 @@ export async function addCarImg(req, res) {
 
     await TemporaryDocuments.findByIdAndUpdate(isExist._id, {
       carImg,
-      });
+    });
     return res.status(201).send();
   } catch (error) {
     console.log(error);
@@ -121,6 +121,10 @@ export async function createNewCard(req, res) {
     remiseSemaine = 0,
     remiseMois = 0,
     Caracteristiques,
+    transmission,
+    type,
+    Carburant,
+    Places = 5,
   } = req.body;
   const { userId } = req;
   if (
@@ -131,7 +135,11 @@ export async function createNewCard(req, res) {
     kilometrage < 0 ||
     !location ||
     !Description ||
-    +annee < 1950
+    +annee < 1950 ||
+    !transmission ||
+    !type ||
+    !Carburant ||
+    Places < 0 
   )
     return res
       .status(422)
@@ -157,11 +165,15 @@ export async function createNewCard(req, res) {
       carImg: files.carImg,
       cartGris: files.cartGris,
       permis: files.permis,
-      annee,
       remiseSemaine,
       remiseMois,
       userId,
       Caracteristiques,
+      Carburant,
+      transmission,
+      type,
+      Places,
+      Annee: annee,
     }).save();
 
     await TemporaryDocuments.findByIdAndDelete(files._id);

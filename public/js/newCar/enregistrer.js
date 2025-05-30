@@ -383,7 +383,10 @@ document.addEventListener("DOMContentLoaded", () => {
 // ! my code
 document.getElementById("gotoSecondPage").addEventListener("submit", (e) => {
   e.preventDefault();
-
+  const transmission = document.getElementById("transmission").value;
+  const type = document.getElementById("type-vehicule").value;
+  const Places = document.getElementById("places").value;
+  const Carburant = document.getElementById("type-carburant").value;
   const description = document.getElementById("description").value;
   const marque = document.getElementById("marque").value;
   const modele = document.getElementById("modele").value;
@@ -403,6 +406,10 @@ document.getElementById("gotoSecondPage").addEventListener("submit", (e) => {
     marque,
     modele,
     location,
+    Carburant,
+    type,
+    transmission,
+    Places
   };
   localStorage.setItem(
     "vehiculeInformation",
