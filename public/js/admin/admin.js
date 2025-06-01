@@ -471,12 +471,22 @@ function initListings() {
   const modal = document.getElementById("listingModal");
   const closeModal = document.querySelector(".close-modal");
   const cancelButton = document.querySelector(".modal-btn.cancel");
-
   // Fonction pour ouvrir le modal
   (function () {
     const modalApproveBtn = document.querySelector(".modal-btn.approve");
     const modalRejectBtn = document.querySelector(".modal-btn.reject");
     const modalDisableBtn = document.querySelector(".modal-btn.disable");
+    const mainImagePreview = document.getElementById("mainImagePreview");
+    const subImagesPreview = document.querySelectorAll(".subImagesPreview");
+    if (subImagesPreview) {
+      subImagesPreview.forEach((preview) => {
+        preview.addEventListener("click", function (e) {
+          const src = e.target.getAttribute("src");
+          if (!src) return;
+          mainImagePreview.setAttribute("src", src);
+        });
+      });
+    }
 
     if (modalApproveBtn) {
       modalApproveBtn.onclick = async function (e) {

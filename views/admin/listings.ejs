@@ -252,12 +252,12 @@
             <div class="modal-body">
                 <div class="listing-details">
                     <div class="listing-images">
-                        <img src="<%=model.carImg[0]%>" alt="Car Image" class="main-image">
+                        <img src="<%=model.carImg[0]%>" alt="Car Image" class="main-image" id="mainImagePreview" >
                         <div class="thumbnail-images" style="display: flex; flex-wrap: wrap; gap: 5px;">
-                            <img src="<%=model.cartGris%>" alt="cartGris" style="width: 100px; height: 100px; object-fit: cover;">
-                            <img src="<%=model.permis%>" alt="permis" style="width: 100px; height: 100px; object-fit: cover;">
+                            <img src="<%=model.cartGris%>"  class="subImagesPreview" alt="cartGris" style="width: 100px; height: 100px; object-fit: cover;">
+                            <img src="<%=model.permis%>" class="subImagesPreview" alt="permis" style="width: 100px; height: 100px; object-fit: cover;">
                             <%model.carImg.slice(1).forEach(image => { %>
-                                <img src="<%=image%>" alt="Car Image" style="width: 100px; height: 100px; object-fit: cover;">
+                                <img src="<%=image%>" class="subImagesPreview"  alt="Car Image" style="width: 100px; height: 100px; object-fit: cover;">
                             <% }) %>
                         </div>
                     </div>
