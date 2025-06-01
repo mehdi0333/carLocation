@@ -1,10 +1,12 @@
+let files = [];
 document.getElementById("submitButton").addEventListener("click", async (e) => {
   e.preventDefault();
-
-  const imageInput = document.getElementById("imageInput").files;
-  if (!imageInput.length) return;
+  if (files.length < 3 || files.length > 5) {
+    alert("Please select between 3 and 5 images.");
+    return;
+  }
   const formData = new FormData();
-  Array.from(imageInput).forEach((file) => {
+  Array.from(files).forEach((file) => {
     formData.append("images", file);
   });
   try {
@@ -22,26 +24,22 @@ document.getElementById("submitButton").addEventListener("click", async (e) => {
     console.log(error);
   }
 });
+// Handle image input change and display previews
 document.getElementById("imageInput").addEventListener("change", (e) => {
-  const files = e.target.files;
+  const filesInput = e.target.files;
+  if (!filesInput.length) return;
+  files = [...Array.from(files), ...filesInput].slice(0, 5);
+  const imagePreview = document.getElementsByClassName("image-preview");
+  Array.from(imagePreview).forEach((preview, index) => {
+    preview.src = URL.createObjectURL(files[index]);
+  });
+});
+// Reset image input and previews
+document.getElementById("resetImgBtn").addEventListener("click", (e) => {
+  e.preventDefault();
+  document.getElementById("imageInput").value = "";
   const imagePreview = document.getElementsByClassName("image-preview");
   Array.from(imagePreview).forEach((preview) => {
     preview.src = "";
   });
-  if (files.length >= 3 && files.length <= 5) {
-    alert(
-      "Images sélectionnées : " +
-        Array.from(files)
-          .map((file) => file.name)
-          .join(", ")
-    );
-    Array.from(files).forEach((file, index) => {
-      if (index < imagePreview.length) {
-        imagePreview[index].src = URL.createObjectURL(file);
-      }
-    });
-  } else {
-    alert("Veuillez sélectionner minimum 3 et maximum 5 images.");
-    e.target.value = ""; // Reset the input if less than 3 images
-  }
 });
