@@ -133,7 +133,7 @@
                     <% } %>
                     <td>
                       <div class="action-buttons">
-                        <button class="action-btn view">
+                        <button class="action-btn view" data-id="<%= plaint._id %>">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -184,7 +184,8 @@
     </div>
 
     <!-- Modal pour voir les détails de la plainte -->
-    <div class="modal" id="complaintModal">
+    <% if (model !== null) { %>
+    <div class="modal active" id="complaintModal">
       <div class="modal-content">
         <div class="modal-header">
           <h3>Détails de la plainte</h3>
@@ -208,14 +209,16 @@
         <div class="modal-body">
           <div class="complaint-details">
             <div class="complaint-header">
-              <div class="complaint-id">#PL-001</div>
+              <div class="complaint-id">#<%=model._id%></div>
               <div class="complaint-status">
                 <span class="status-badge new">Nouveau</span>
               </div>
             </div>
             <div class="complaint-subject">
               <h4>Problème de facturation</h4>
-              <div class="complaint-date">Créé le 15/04/2023</div>
+              <div class="complaint-date">
+                Créé le <%= model.createdAt.toLocaleDateString() %>
+              </div>
             </div>
             <div class="user-info">
               <h5>Utilisateur</h5>
@@ -237,26 +240,28 @@
                   </svg>
                 </div>
                 <div class="user-details">
-                  <div class="user-name">Thomas Martin</div>
-                  <div class="user-email">thomas.martin@example.com</div>
-                  <div class="user-phone">+33 6 12 34 56 78</div>
+                  <div class="user-name">
+                    <%=`${model.userInformation.nom}
+                    ${model.userInformation.prenom}`%>
+                  </div>
+                  <div class="user-email">
+                    <%= model.userInformation.email %>
+                  </div>
+                  <div class="user-phone">
+                    <%= model.userInformation.telephone %>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="complaint-description">
               <h5>Description</h5>
-              <p>
-                J'ai été facturé deux fois pour ma dernière location. La
-                première transaction a été effectuée le 10/04/2023 pour un
-                montant de 120€, puis une seconde transaction identique a été
-                prélevée le 12/04/2023. Je demande le remboursement de la
-                seconde transaction qui semble être une erreur.
-              </p>
+              <p><%= model.description %></p>
             </div>
             <div class="complaint-attachments">
               <h5>Pièces jointes</h5>
               <div class="attachment-files">
-                <div class="attachment-file">
+                <% model.imgPath.forEach(ele => { %>
+                <div class="attachment-file" onclick="window.open('/<%= ele %>', '_blank')">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -276,33 +281,12 @@
                     <line x1="16" y1="17" x2="8" y2="17"></line>
                     <polyline points="10 9 9 9 8 9"></polyline>
                   </svg>
-                  <span>releve_bancaire.pdf</span>
+                  <span><%= ele.replaceAll("/", "") %></span>
                 </div>
-                <div class="attachment-file">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path
-                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                    ></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                  </svg>
-                  <span>facture_location.pdf</span>
-                </div>
+                <% }) %>
               </div>
             </div>
-            <div class="complaint-messages">
+            <!-- <div class="complaint-messages">
               <h5>Messages</h5>
               <div class="message-list">
                 <div class="message">
@@ -324,7 +308,7 @@
                 <textarea placeholder="Votre message..."></textarea>
                 <button class="send-message">Envoyer</button>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="modal-footer">
@@ -334,6 +318,7 @@
         </div>
       </div>
     </div>
+    <% } %>
 
     <script src="/js/admin/admin.js"></script>
   </body>

@@ -139,7 +139,26 @@ export async function goToAdminPlaints(req, res) {
       plaint.userInformation = user;
       plaints.push(plaint);
     }
-    res.render("admin/complaints", { user, plaints });
+    res.render("admin/complaints", { user, plaints, model: null });
+  } catch (error) {
+    console.log(error);
+    res.render("500");
+  }
+}
+export async function goToAdminPlaintsModel(req, res) {
+  try {
+    const { user } = req;
+    const { id } = req.params;
+    const plaintsInformations = await Plainte.find();
+    const plaints = [];
+    let model = null;
+    for (let plaint of plaintsInformations) {
+      const user = await User.findById(plaint.userId);
+      plaint.userInformation = user;
+      if (plaint._id.toString() === id) model = plaint;
+      plaints.push(plaint);
+    }
+    res.render("admin/complaints", { user, plaints, model });
   } catch (error) {
     console.log(error);
     res.render("500");

@@ -5,5 +5,5 @@ import upload from "../utils/multer.js";
 const router = express.Router();
 
 router.get("/aide", accessToken, goToPlaint);
-router.post("/api/plaint",upload.single('image'), accessToken , createPlaint)
+router.post("/api/plaint",upload.array('image'), accessToken , createPlaint)
 export default router;

@@ -7,7 +7,8 @@ const plainteSchema = new mongoose.Schema(
       required: true,
     },
     imgPath: {
-      type: String,
+      type: Array,
+      default: [],
     },
     sujet: {
       type: String,

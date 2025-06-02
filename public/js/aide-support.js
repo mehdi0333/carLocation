@@ -100,16 +100,18 @@ document.addEventListener("DOMContentLoaded", () => {
       ).value;
       const priority = document.getElementById("complaint-priority").value;
 
-      const file = document.getElementById("complaint-attachments").files[0];
+      const file = document.getElementById("complaint-attachments").files;
 
-      if (!priority || !type || !subject || !description || !file) {
+      if (!priority || !type || !subject || !description || !file.length) {
         alert("Veuillez remplir tous les champs obligatoires.");
         return;
       }
 
       // Simulate form submission
       const formData = new FormData();
-      formData.append("image", file);
+      Array.from(file).forEach((f) => {
+        formData.append("image", f); // Append each file to the form data
+      });
       formData.append("type", type);
       formData.append("description", description);
       formData.append("sujet", subject);

@@ -4,6 +4,7 @@ import accessAdmin, {
   goToAdminDisputes,
   gotoAdminPage,
   goToAdminPlaints,
+  goToAdminPlaintsModel,
   goToAdminReports,
   gotoAdminUsersPage,
   gotoAnnonce,
@@ -19,5 +20,6 @@ router.get("/listings/:carId", accessToken, accessAdmin, gotoModel);
 router.get("/disputes", accessToken, accessAdmin, goToAdminDisputes);
 router.get("/reports", accessToken, accessAdmin, goToAdminReports);
 router.get("/complaints", accessToken, accessAdmin, goToAdminPlaints);
+router.get("/complaints/:id", accessToken, accessAdmin, goToAdminPlaintsModel);
 
 export default router;

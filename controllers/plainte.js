@@ -1,6 +1,6 @@
 import { Plainte } from "../models/models.js";
 import { deleteFile } from "../utils/files.js";
-export async function goToPlaint(req, res) {
+  export async function goToPlaint(req, res) {
   try {
     const { user, userId } = req;
 
@@ -15,19 +15,21 @@ export async function createPlaint(req, res) {
   try {
     const { user, userId } = req;
     const { type, description, priorite, sujet } = req.body;
-    const file = req.file;
-    const path = req.file.path.replace("public\\", "");
-    if (!type || !description || !priorite || !sujet || !file) {
-      deleteFile(file);
+    const files = req.files;
+    const paths = files.map((file) => file.path.replace("public\\", ""));
+    console.log(paths);
+    if (!type || !description || !priorite || !sujet || !files.length) {
+      files.forEach((file) => deleteFile(file));
       return res.status(422).send();
     }
     const newPlaint = await new Plainte({
       type,
-      imgPath: path,
+      imgPath: paths,
       userId,
       description,
       sujet,
     }).save();
+    console.log(newPlaint);
     return res.status(200).send();
   } catch (error) {
     console.log(error);
