@@ -19,6 +19,8 @@ router.post(
   addDocuments
 );
 router.post("/car/image", accessToken, upload.array("images"), addCarImg);
+router.post("/reservation", accessToken, createReservation);
+router.post("/createRating", accessToken, createNewRating);
 router.put("/user/accountStatus", verifyToken, accessAdmin, accountStatus);
 router.put("/user/carStatus", verifyToken, accessAdmin, carStatus);
 router.put(
@@ -28,8 +30,5 @@ router.put(
   changeProfileImg
 );
 router.put("/profil/information", accessToken, updateProfile);
-
-router.post("/reservation", accessToken, createReservation);
 router.put("/reservationResponse", accessToken, reservationResponse);
-router.post("/createRating", accessToken, createNewRating);
 export default router;

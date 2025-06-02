@@ -52,11 +52,10 @@ export async function submitCarInformation(req, res) {
       car.Description = description;
     if (transmission && car.transmission !== transmission)
       car.transmission = transmission;
-    if (Carburant && car.Carburant !== Carburant)
-      car.Carburant = Carburant;
+    if (Carburant && car.Carburant !== Carburant) car.Carburant = Carburant;
     if (type && car.type !== type) car.type = type;
     if (Plcaces && car.Places !== Plcaces) car.Places = Plcaces;
-    await car.save(); 
+    await car.save();
     res.redirect(`/edit/enregistrer-document/${carId}`);
   } catch (error) {
     console.error("Error rendering new car page:", error);
@@ -119,23 +118,20 @@ export async function submitCarImg(req, res) {
     const { userId, files } = req;
     const { carId } = req.body;
     const car = await Car.findById(carId);
-    if (!car) return res.render("404");
-    // Check if the user is authorized to edit this car
-    if (car.userId.toString() !== userId.toString()) return res.render("403");
-    // Handle file uploads
+    if (!car) return res.status(404).send("Car not found");
+    if (car.userId.toString() !== userId.toString())
+      return res.status(403).send("Unauthorized");
     if (files.length > 0) {
-      console.log(files);
       car.carImg.forEach((img) => {
         if (img) deleteFile("\\public" + img);
       });
-      car.carImg = files.map((file) => {
-        return "/" + file.filename;
-      });
+      car.carImg = files.map((file) => "/" + file.filename);
       await car.save();
+      return res.status(200).send("Images updated successfully");
     }
-    res.status(200);
+    return res.status(400).send("No files uploaded");
   } catch (error) {
-    console.error("Error rendering new car page:", error);
+    console.error("Error in submitCarImg:", error);
     res.status(500).send("Internal Server Error");
   }
 }

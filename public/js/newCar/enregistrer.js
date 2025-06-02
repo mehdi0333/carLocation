@@ -409,7 +409,7 @@ document.getElementById("gotoSecondPage").addEventListener("submit", (e) => {
     Carburant,
     type,
     transmission,
-    Places
+    Places,
   };
   localStorage.setItem(
     "vehiculeInformation",

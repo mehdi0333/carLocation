@@ -392,9 +392,9 @@ document
     const annee = document.getElementById("annee").value || null;
     const kilometrage = document.getElementById("kilometrage").value || null;
     const transmission = document.getElementById("transmission").value || null;
-    const Carburant = document.getElementById("carburant").value || null;
+    const Carburant = document.getElementById("carburant")?.value || null;
     const Plcaces = document.getElementById("places").value || null;
-    const type = document.getElementById("type").value || null;
+    const type = document.getElementById("type")?.value || null;
     const location =
       document.getElementById("ville").value.split(" ")[1] || null;
 
