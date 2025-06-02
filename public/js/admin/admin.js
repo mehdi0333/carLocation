@@ -11,6 +11,9 @@ function getCurrentPage() {
   if (second.length === 3 && second[1] === "listings") {
     return "listings";
   }
+  if (second.length === 3 && second[1] === "complaints") {
+    return "complaints";
+  }
   return page || "/"; // Par défaut, on considère qu'on est sur dashboard.html
 }
 
@@ -1201,9 +1204,7 @@ function initComplaints() {
 
   // Fonction pour fermer le modal
   function closeModalFunction() {
-    if (modal) {
-      window.location.href = "/complaints";
-    }
+    if (closeModal) window.location.href = "/complaints";
   }
 
   // Gestion de l'ouverture du modal
@@ -1218,6 +1219,7 @@ function initComplaints() {
 
   // Gestion de la fermeture du modal
   if (closeModal) {
+    console.log("Adding closeModal event listener");
     closeModal.addEventListener("click", closeModalFunction);
   }
 
