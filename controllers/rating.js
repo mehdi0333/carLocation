@@ -1,4 +1,4 @@
-import {Rating} from "../models/models.js";
+import { Car, Rating } from "../models/models.js";
 
 export async function createNewRating(req, res) {
   try {
@@ -18,13 +18,24 @@ export async function createNewRating(req, res) {
       userRating.rating = rating;
       if (comment) userRating.comment = comment;
       await userRating.save();
-      return res.status(200).json(userRating);
+    } else {
+      await Rating.create({
+        userId,
+        carId,
+        rating,
+        comment,
+      });
     }
-    await Rating.create({
-      userId,
-      carId,
-      rating,
-      comment,
+    // Update the car's average rating
+    const ratings = await Rating.find({ carId });
+    console.log(ratings);
+    const totalRating = ratings.reduce((acc, r) => acc + r.rating, 0);
+    const averageRating = ratings.length ? totalRating / ratings.length : 0;
+    console.log(averageRating);
+    console.log(ratings.length);
+    await Car.findByIdAndUpdate(carId, {
+      rating: averageRating.toFixed(1),
+      totalRating: ratings.length,
     });
     return res.status(200).send();
   } catch (error) {

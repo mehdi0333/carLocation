@@ -42,6 +42,14 @@ const carSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    totalRating: {
+      type: Number,
+      default: 0,
+    },
     cartGris: {
       type: String,
       defulat: "",

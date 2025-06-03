@@ -231,7 +231,9 @@
 
           <div class="results">
             <div class="results-header">
-              <span class="results-count"><%= cars.length %> voitures disponibles</span>
+              <span class="results-count"
+                ><%= cars.length %> voitures disponibles</span
+              >
               <div class="results-sort">
                 <span>Trier par:</span>
                 <div class="select-wrapper">
@@ -270,7 +272,7 @@
                   </div>
                   <div class="car-rating">
                     <i class="fas fa-star"></i>
-                    <span>4.8 (24)</span>
+                    <span><%=car.rating%>(<%=car.totalRating%>)</span>
                   </div>
                   <a href="/annonce/<%=car._id%>" class="btn-details">
                     Détails
@@ -286,7 +288,7 @@
 
     <footer>
       <div class="container">
-        <p>&copy; 2024 CarShare. Tous droits réservés.</p>
+        <p>&copy; 2025 CarShare. Tous droits réservés.</p>
       </div>
     </footer>
 

@@ -119,8 +119,9 @@
               <div class="car-image">
                 <img src="<%=car.carImg[0] %>" alt="My Image" />
                 <span class="rating"
-                  ><i class="fas fa-star"></i> <span>4.8</span></span
-                >
+                  ><i class="fas fa-star"></i>
+                  <span><%=car.rating %></span>
+                </span>
               </div>
               <div class="car-details">
                 <h3><%= `${car.marque} ${car.modele}` %></h3>
