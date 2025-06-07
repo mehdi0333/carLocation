@@ -31,21 +31,33 @@ async function createReservation(req, res) {
       return res.status(400).send();
     // * Find the car
     const car = await Car.findById(carId);
-    if (!car) return res.status(404).send();
-    if (car.status !== "publiee") res.status(403).send();
-    if (car.userId === userId) res.status(403).send();
+    if (!car) return res.status(404).send("car not found");
+    if (car.status !== "publiee") res.status(403).send("car not published");
+    if (car.userId === userId) res.status(403).send("you can't reserve your own car");
     // * check for dates if is logical
-    console.log("first");
     if (!isDateCorrect(startDate) || !isDateCorrect(endDate))
-      return res.status(403).send();
-    console.log("second");
-    if (startDate.year > endDate.year) 
-      return res.status(403).send();
+      return res.status(403).send("invalid date");
+    if (startDate.year > endDate.year) return res.status(403).send("invalid date");
     else if (startDate.year === endDate.year) {
-      if (startDate.month > endDate.month) return res.status(403).send();
+      if (startDate.month > endDate.month) return res.status(403).send("invalid date");
       else if (startDate.month === endDate.month) {
-        if (startDate.day > endDate.day) return res.status(403).send();
+        if (startDate.day > endDate.day) return res.status(403).send("invalid date");
       }
+    }
+    // * check if the car is already reserved in this period
+    const reservations = await Reservation.find({
+      carId,
+      status: "confirmée",
+      $or: [
+        {
+          startDate: { $lte: setDateFormat(endDate) },
+          endDate: { $gte: setDateFormat(startDate) },
+        },
+      ],
+    });
+    if (reservations.length > 0) {
+      console.log("reservations non");
+      return res.status(403).send("car is already reserved");
     }
     // * calculating how day set
     const start = new Date();

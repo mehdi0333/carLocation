@@ -257,6 +257,12 @@ function initBookingButton() {
         }),
       });
       if (res.status === 201) window.location.href = "/dashboard-locataire";
+      else if (res.status === 403) {
+        const message = await res.text();
+        alert(message);
+      } else {
+        alert("Une erreur s'est produite lors de la réservation.");
+      }
     } catch (error) {
       console.log(error);
     }
