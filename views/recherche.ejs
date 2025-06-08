@@ -63,16 +63,6 @@
                 <div class="date-input">
                   <input type="date" id="end-date" />
                 </div>
-
-                <div class="select-wrapper">
-                  <select id="time-period">
-                    <option value="all-day">Toute la journée</option>
-                    <option value="morning">Matin</option>
-                    <option value="afternoon">Après-midi</option>
-                    <option value="evening">Soir</option>
-                  </select>
-                  <i class="fas fa-chevron-down"></i>
-                </div>
               </div>
             </div>
 
@@ -120,27 +110,57 @@
                 <label>Type de véhicule</label>
                 <div class="checkbox-group">
                   <div class="checkbox-item">
-                    <input type="checkbox" id="citadine" />
+                    <input
+                      type="checkbox"
+                      class="checkbox-values"
+                      id="citadine"
+                      data-type="citadine"
+                    />
                     <label for="citadine">Citadine</label>
                   </div>
                   <div class="checkbox-item">
-                    <input type="checkbox" id="berline" />
+                    <input
+                      type="checkbox"
+                      class="checkbox-values"
+                      id="berline"
+                      data-type="berline"
+                    />
                     <label for="berline">Berline</label>
                   </div>
                   <div class="checkbox-item">
-                    <input type="checkbox" id="suv" />
+                    <input
+                      type="checkbox"
+                      class="checkbox-values"
+                      id="suv"
+                      data-type="suv"
+                    />
                     <label for="suv">SUV</label>
                   </div>
                   <div class="checkbox-item">
-                    <input type="checkbox" id="break" />
+                    <input
+                      type="checkbox"
+                      class="checkbox-values"
+                      id="break"
+                      data-type="break"
+                    />
                     <label for="break">Break</label>
                   </div>
                   <div class="checkbox-item">
-                    <input type="checkbox" id="utilitaire" />
+                    <input
+                      type="checkbox"
+                      class="checkbox-values"
+                      id="utilitaire"
+                      data-type="utilitaire"
+                    />
                     <label for="utilitaire">Utilitaire</label>
                   </div>
                   <div class="checkbox-item">
-                    <input type="checkbox" id="cabriolet" />
+                    <input
+                      type="checkbox"
+                      class="checkbox-values"
+                      id="cabriolet"
+                      data-type="cabriolet"
+                    />
                     <label for="cabriolet">Cabriolet</label>
                   </div>
                 </div>
@@ -148,11 +168,23 @@
                 <label>Transmission</label>
                 <div class="radio-group">
                   <div class="radio-item">
-                    <input type="radio" name="transmission" id="automatique" />
+                    <input
+                      type="radio"
+                      name="transmission"
+                      id="automatique"
+                      class="radios-value"
+                      data-value="automatique"
+                    />
                     <label for="automatique">Automatique</label>
                   </div>
                   <div class="radio-item">
-                    <input type="radio" name="transmission" id="manuelle" />
+                    <input
+                      type="radio"
+                      name="transmission"
+                      id="manuelle"
+                      class="radios-value"
+                      data-value="manuelle"
+                    />
                     <label for="manuelle">Manuelle</label>
                   </div>
                 </div>
@@ -160,7 +192,7 @@
                 <label>Carburant</label>
                 <div class="select-wrapper">
                   <select id="fuel-type">
-                    <option value="">Tous types</option>
+                    <option value="" selected>Tous types</option>
                     <option value="essence">Essence</option>
                     <option value="diesel">Diesel</option>
                     <option value="electrique">Électrique</option>
@@ -178,25 +210,45 @@
               </div>
               <div class="filter-content">
                 <div class="checkbox-item">
-                  <input type="checkbox" id="bluetooth" />
+                  <input
+                    class="checkbox-equi"
+                    type="checkbox"
+                    id="bluetooth"
+                    value="bluetooth"
+                  />
                   <label for="bluetooth"
-                    ><i class="fas fa-bluetooth-b"></i> Bluetooth</label
-                  >
+                    ><i class="fas fa-bluetooth-b"></i> Bluetooth
+                  </label>
                 </div>
                 <div class="checkbox-item">
-                  <input type="checkbox" id="gps" />
-                  <label for="gps"
-                    ><i class="fas fa-map-marker-alt"></i> GPS</label
-                  >
+                  <input
+                    type="checkbox"
+                    class="checkbox-equi"
+                    id="gps"
+                    value="gps"
+                  />
+                  <label for="gps">
+                    <i class="fas fa-map-marker-alt"></i> GPS
+                  </label>
                 </div>
                 <div class="checkbox-item">
-                  <input type="checkbox" id="climatisation" />
+                  <input
+                    class="checkbox-equi"
+                    type="checkbox"
+                    id="climatisation"
+                    value="climatisation"
+                  />
                   <label for="climatisation"
-                    ><i class="fas fa-snowflake"></i> Climatisation</label
-                  >
+                    ><i class="fas fa-snowflake"></i> Climatisation
+                  </label>
                 </div>
                 <div class="checkbox-item">
-                  <input type="checkbox" id="usb" />
+                  <input
+                    type="checkbox"
+                    id="usb"
+                    value="usb"
+                    class="checkbox-equi"
+                  />
                   <label for="usb"><i class="fas fa-usb"></i> Prise USB</label>
                 </div>
               </div>
@@ -256,7 +308,11 @@
               <div
                 class="car-card"
                 data-price="<%=car.prix%>"
+                data-caracteristiques="<%=car.Caracteristiques%>"
                 data-rating="<%=car.rating%>"
+                data-type="<%=car.type%>"
+                data-transmission="<%=car.transmission%>"
+                data-engine="<%=car.Carburant%>"
               >
                 <div class="car-image">
                   <img src="<%=car.carImg[0]%>" alt="<%=car.modele%>" />
