@@ -33,15 +33,19 @@ async function createReservation(req, res) {
     const car = await Car.findById(carId);
     if (!car) return res.status(404).send("car not found");
     if (car.status !== "publiee") res.status(403).send("car not published");
-    if (car.userId === userId) res.status(403).send("you can't reserve your own car");
+    if (car.userId === userId)
+      res.status(403).send("you can't reserve your own car");
     // * check for dates if is logical
     if (!isDateCorrect(startDate) || !isDateCorrect(endDate))
       return res.status(403).send("invalid date");
-    if (startDate.year > endDate.year) return res.status(403).send("invalid date");
+    if (startDate.year > endDate.year)
+      return res.status(403).send("invalid date");
     else if (startDate.year === endDate.year) {
-      if (startDate.month > endDate.month) return res.status(403).send("invalid date");
+      if (startDate.month > endDate.month)
+        return res.status(403).send("invalid date");
       else if (startDate.month === endDate.month) {
-        if (startDate.day > endDate.day) return res.status(403).send("invalid date");
+        if (startDate.day > endDate.day)
+          return res.status(403).send("invalid date");
       }
     }
     // * check if the car is already reserved in this period
@@ -102,6 +106,35 @@ async function createReservation(req, res) {
   } catch (error) {
     console.error("Error creating reservation:", error);
     res.status(500).send();
+  }
+}
+export async function reservationVerification(req, res) {
+  try {
+    const { carId, dateStart, dateEnd } = req.body;
+    
+    // Check if the car has any confirmed reservations in this period
+    console.log(dateStart,dateEnd);
+    const reservations = await Reservation.find({
+      carId,
+      status: "confirmée",
+      $or: [
+        {
+          startDate: { $lte: dateEnd },
+          endDate: { $gte: dateStart },
+        },
+      ],
+    });
+
+    // If there are any reservations, the car is not available
+    if (reservations.length > 0) {
+      return res.status(200).json({ isValid: false });
+    }
+
+    // If no reservations found, the car is available
+    return res.status(200).json({ isValid: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({error : "internal server error"});
   }
 }
 

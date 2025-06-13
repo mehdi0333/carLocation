@@ -11,6 +11,7 @@ import {
 } from "../controllers/car.js";
 import editCar from "./editCar.js";
 import { accessToken, verifyToken } from "../middlewars/token.js";
+import { reservationVerification } from "../controllers/reservations.js";
 
 const router = express.Router();
 
@@ -22,6 +23,9 @@ router.get("/enregistrer-document", accessToken, gotoDocumentCarPage);
 router.get("/enregistrer-confirmation", accessToken, gotoConfirmationCarPage);
 router.get("/annonce/:carId", verifyToken, annoncePage);
 router.get("/car/delete/:carId", verifyToken, deleteCar);
+router.post("/hasReservation",reservationVerification)
+
+
 router.use("/edit",editCar)
 
 

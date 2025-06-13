@@ -90,11 +90,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let visibleCount = 0;
 
-    carCards.forEach((card) => {
+    async function checkReservation(carId){
+      const dateStart = document.getElementById("start-date").value;
+      const dateEnd = document.getElementById("end-date").value;
+      try {
+        const res = await fetch("/hasReservation",{
+          method: "POST",
+          headers : {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            carId,
+            dateEnd,
+            dateStart,
+          }),
+        });
+        const {isValid} = await res.json();
+        return isValid;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    }
+    carCards.forEach(async (card) => {
+      // get data
       const engineType = card.getAttribute("data-engine");
       const price = parseInt(card.getAttribute("data-price"));
       const rating = parseFloat(card.getAttribute("data-rating"));
       const type = card.getAttribute("data-type").toLowerCase();
+      const carId = card.getAttribute("data-carId");
       const transmission = card.getAttribute("data-transmission").toLowerCase();
       const cardLocation = card
         .querySelector(".car-location span")
@@ -102,6 +126,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const carEquiments = card
         .getAttribute("data-caracteristiques")
         .split(",");
+      // get start , end date
+      const isValid = await checkReservation(carId);
       // get type of cars
       const checkboxes = document.querySelectorAll(".checkbox-values");
       const selectedTypes = Array.from(checkboxes)
@@ -129,9 +155,12 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
       });
+      // check if the car is available
+      if(!isValid){
+        isVisible = false;
+      }
       // engine type filter
       if (engineTypeValue && fuelType !== engineTypeValue) {
-        alert("samir");
         isVisible = false;
       }
       // Fuel type filter
