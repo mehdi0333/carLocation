@@ -281,7 +281,7 @@ nav ul li a {
 .hero .car-image {
   position: relative;
   z-index: 1;
-  transform: scaleX(-1);
+  /* transform: scaleX(-1); */
   width: 100%;
   max-width: 600px;
   background-color: transparent;
@@ -346,6 +346,7 @@ nav ul li a {
 
 .car-image img {
   width: 100%;
+  transform: scaleX(-1);
   height: auto;
   display: block;
 }
@@ -500,12 +501,13 @@ nav ul li a {
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 500;
+  transform: scaleX(-1);
 }
 
 .rating i {
   color: #ffc107;
   margin-right: 3px;
-}
+  }
 
 .car-details {
   padding: 15px;
