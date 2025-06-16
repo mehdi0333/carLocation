@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Mobile menu toggle
   const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
   const mainNav = document.querySelector(".main-nav");
 
@@ -10,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // FAQ tabs
+// FAQ tabs
   const tabButtons = document.querySelectorAll(".faq-tabs .tab-btn");
   const tabContents = document.querySelectorAll(".faq-content");
 
