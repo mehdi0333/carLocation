@@ -77,6 +77,7 @@ async function createReservation(req, res) {
     deff /= 60;
     deff /= 60;
     deff /= 24;
+    deff += 1;
     // * get exactly how many day need the car
     const day = Math.floor(deff);
     deff /= 7;
@@ -111,9 +112,9 @@ async function createReservation(req, res) {
 export async function reservationVerification(req, res) {
   try {
     const { carId, dateStart, dateEnd } = req.body;
-    
+
     // Check if the car has any confirmed reservations in this period
-    console.log(dateStart,dateEnd);
+    console.log(dateStart, dateEnd);
     const reservations = await Reservation.find({
       carId,
       status: "confirmée",
@@ -134,7 +135,7 @@ export async function reservationVerification(req, res) {
     return res.status(200).json({ isValid: true });
   } catch (error) {
     console.log(error);
-    res.status(500).send({error : "internal server error"});
+    res.status(500).send({ error: "internal server error" });
   }
 }
 
