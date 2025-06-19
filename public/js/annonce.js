@@ -157,7 +157,7 @@ function initDatePicker() {
     new Date();
     // Calculate difference in days
     const diffTime = date2 - date1;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
     return diffDays > 0 ? diffDays : 0;
   }
@@ -175,7 +175,7 @@ function initDatePicker() {
       .getElementById("totalInformation")
       .getAttribute("data-semaine");
     const dailyRate = +document
-      .getElementById("totalInformation") 
+      .getElementById("totalInformation")
       .getAttribute("data-price");
     if (days > 0) {
       const subtotal = dailyRate * days;
