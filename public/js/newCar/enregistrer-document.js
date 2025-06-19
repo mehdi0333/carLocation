@@ -1,3 +1,15 @@
+window.onpageshow = (e) => {
+  const permisInput = document.getElementById("permis").files[0];
+  const cardGrisInput = document.getElementById("carte-grise").files[0];
+  const permisPreview = document.getElementById("permis-preview");
+  const cardGrisPreview = document.getElementById("carte-grise-preview");
+  if (permisInput) {
+    permisPreview.src = URL.createObjectURL(permisInput);
+  }
+  if (cardGrisInput) {
+    cardGrisPreview.src = URL.createObjectURL(cardGrisInput);
+  }
+};
 document
   .getElementById("documents-form")
   .addEventListener("submit", async (e) => {
@@ -28,7 +40,8 @@ document
 document.getElementById("carte-grise").addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (file) {
-    document.getElementById("carte-grise-preview").src = URL.createObjectURL(file);
+    document.getElementById("carte-grise-preview").src =
+      URL.createObjectURL(file);
   } else {
     document.getElementById("carte-grise-preview").src = "";
   }
