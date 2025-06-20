@@ -800,7 +800,7 @@ function initDisputes() {
   const actionButtons = document.querySelectorAll(".action-btn:not(.view)");
   if (actionButtons) {
     actionButtons.forEach((button) => {
-      button.addEventListener("click", function () {
+      button.addEventListener("click",function () {
         const row = this.closest("tr");
         const disputeId = row.querySelector("td:first-child").textContent;
 
@@ -873,7 +873,7 @@ function initDisputes() {
 
           showNotification(`Le litige ${disputeId} a été rouvert.`);
         }
-
+ 
         // Réinitialiser les écouteurs d'événements après modification du DOM
         initDisputes();
       });
@@ -1199,6 +1199,7 @@ function initComplaints() {
   // Gestion du modal de plainte
   const modal = document.getElementById("complaintModal");
   const viewButtons = document.querySelectorAll(".action-btn.view");
+  // const plainId = viewButtons.getAttribute("data-id");
   const closeModal = document.querySelector(".close-modal");
   const cancelButton = document.querySelector(".modal-btn.cancel");
 
@@ -1245,9 +1246,14 @@ function initComplaints() {
       button.parentNode.replaceChild(newButton, button);
 
       // Ajouter les nouveaux écouteurs d'événements
-      newButton.addEventListener("click", function () {
+      
+    try{
+      newButton.addEventListener("click", async function () {
         const row = this.closest("tr");
         if (!row) return;
+        const plaintId = document
+          .querySelector(".action-btn.view")
+          .getAttribute("data-id");
 
         const complaintId =
           row.querySelector("td:first-child")?.textContent || "";
@@ -1255,6 +1261,17 @@ function initComplaints() {
         const actionCell = row.querySelector("td:last-child");
 
         if (this.classList.contains("process")) {
+         await fetch("/api/changePlantStatus", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              plaintId,
+              status: "process",
+            }),
+          })
+         
           // Traiter la plainte
           if (statusCell) {
             statusCell.innerHTML =
@@ -1264,7 +1281,7 @@ function initComplaints() {
           if (actionCell) {
             actionCell.innerHTML = `
                         <div class="action-buttons">
-                            <button class="action-btn view">
+                            <button class="action-btn view" data-id="${plaintId}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 Voir
                             </button>
@@ -1276,12 +1293,18 @@ function initComplaints() {
                     `;
           }
 
-          showNotification(
-            `La plainte ${complaintId} est maintenant en cours de traitement.`
-          );
-          initComplaints();
         } else if (this.classList.contains("resolve")) {
           // Résoudre la plainte
+          await fetch("/api/changePlantStatus", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              plaintId,
+              status: "resolve",
+            }),
+          })
           if (statusCell) {
             statusCell.innerHTML =
               '<span class="status-badge resolved">Résolu</span>';
@@ -1290,7 +1313,7 @@ function initComplaints() {
           if (actionCell) {
             actionCell.innerHTML = `
                         <div class="action-buttons">
-                            <button class="action-btn view">
+                            <button class="action-btn view" data-id="${plaintId}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 Voir
                             </button>
@@ -1302,11 +1325,17 @@ function initComplaints() {
                     `;
           }
 
-          showNotification(
-            `La plainte ${complaintId} a été résolue avec succès.`
-          );
-          initComplaints();
         } else if (this.classList.contains("reopen")) {
+          await fetch("/api/changePlantStatus", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              plaintId,
+              status: "En attente",
+            }),
+          })
           // Rouvrir la plainte
           if (statusCell) {
             statusCell.innerHTML =
@@ -1316,7 +1345,7 @@ function initComplaints() {
           if (actionCell) {
             actionCell.innerHTML = `
                         <div class="action-buttons">
-                            <button class="action-btn view">
+                            <button class="action-btn view" data-id="${plaintId}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 Voir
                             </button>
@@ -1327,11 +1356,13 @@ function initComplaints() {
                         </div>
                     `;
           }
-
-          showNotification(`La plainte ${complaintId} a été rouverte.`);
-          initComplaints();
         }
+      // INSERT_YOUR_CODE
+      window.location.reload();
       });
+    }catch (error) {
+      console.error(error)
+    }
     });
   }
 

@@ -1,6 +1,7 @@
 import { Plainte } from "../models/models.js";
 import { deleteFile } from "../utils/files.js";
-  export async function goToPlaint(req, res) {
+
+export async function goToPlaint(req, res) {
   try {
     const { user, userId } = req;
 
@@ -34,5 +35,25 @@ export async function createPlaint(req, res) {
   } catch (error) {
     console.log(error);
     res.status(500).send();
+  }
+}
+
+export async function changePlaintStatus(req, res) {
+  try {
+    const { plaintId, status } = req.body;
+    
+    const plainte = await Plainte.findById(plaintId);
+    
+    if (!plainte) {
+      return res.status(404).send();
+    }
+    console.log("hello")
+    plainte.statut = status;
+    await plainte.save();
+    
+    return res.status(200).send();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send();
   }
 }

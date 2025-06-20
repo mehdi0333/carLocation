@@ -128,7 +128,7 @@
                     </td>
                     <% } else { %>
                     <td>
-                      <span class="status-badge resolved">solve</span>
+                      <span class="status-badge resolved"><%=plaint.statut%></span>
                     </td>
                     <% } %>
                     <td>
@@ -152,6 +152,7 @@
                           </svg>
                           Voir
                         </button>
+                        <%if (plaint.statut==="En attente") {%>
                         <button class="action-btn process">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -171,6 +172,17 @@
                           </svg>
                           Traiter
                         </button>
+                        <%} else if (plaint.statut ==="process") {%>
+                          <button class="action-btn resolve">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                              Résoudre
+                          </button>
+                        <%}else if (plaint.statut === "resolve"){%>  
+                          <button class="action-btn reopen">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                              Rouvrir
+                          </button>
+                        <%}%>
                       </div>
                     </td>
                   </tr>
