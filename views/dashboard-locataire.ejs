@@ -109,7 +109,7 @@
             </tr>
           </thead>
           <tbody>
-            <%myReservation.forEach(reservation=>{%>
+            <%myReservation.reverse().forEach(reservation=>{%>
             <tr>
               <td>
                 <%=`${reservation.car.marque} ${reservation.car.modele}`%>
