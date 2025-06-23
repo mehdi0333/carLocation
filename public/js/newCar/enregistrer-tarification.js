@@ -16,13 +16,17 @@ document
 
     let information = localStorage.getItem("vehiculeInformation");
     let features = localStorage.getItem("carshare_options");
+    let services = localStorage.getItem("carshare_services");
     // ! handle error
     if (!information) return;
     information = JSON.parse(information);
     if (!features) return;
     features = JSON.parse(features);
+    if (!services) return;
+    services = JSON.parse(services);
     const body = {
       ...information,
+      services,
       Caracteristiques: features,
       prix,
       remiseMois,

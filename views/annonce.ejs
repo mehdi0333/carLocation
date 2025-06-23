@@ -125,6 +125,39 @@
             </div>
           <% }); %>
         </div>
+        <div class="vehicle-features">
+          <h2>Services</h2>
+          <ul>
+              <% if (car.services.livraison.enable) { %>
+              <li style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                      <p style="margin:0; font-weight: 500;">Livraison</p>
+                      <p style="margin:0; font-size: 0.95em; color: #666;"><%= car.services.livraison.value %></p>
+                  </div>
+                  <p style="margin:0; font-weight: 500; color: #2d8f2d;"><%= car.services.livraison.prix %> DA</p>
+              </li>
+              <% } %>
+              
+              <% if (car.services.nettoyage && car.services.nettoyage.enable) { %>
+              <li style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                      <p style="margin:0; font-weight: 500;">Nettoyage</p>
+                      <p style="margin:0; font-size: 0.95em; color: #666;"><%= car.services.nettoyage.value %></p>
+                  </div>
+                  <p style="margin:0; font-weight: 500; color: #2d8f2d;"><%= car.services.nettoyage.prix %> DA</p>
+              </li>
+              <% } %>
+              <% if (car.services.kilometargeLimite && car.services.kilometargeLimite.enable) { %>
+              <li style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                      <p style="margin:0; font-weight: 500;">Kilométrage Limité</p>
+                      <p style="margin:0; font-size: 0.95em; color: #666;"><%= car.services.kilometargeLimite.value %></p>
+                  </div>
+                  <p style="margin:0; font-weight: 500; color: #2d8f2d;"><%= car.services.kilometargeLimite.prix %> DA</p>
+              </li>
+              <% } %>
+          </ul>      
+        </div>
       </section>
 
       <!-- Owner Section -->

@@ -121,12 +121,14 @@ export async function createNewCard(req, res) {
     remiseSemaine = 0,
     remiseMois = 0,
     Caracteristiques,
+    services,
     transmission,
     type,
     Carburant,
     Places = 5,
   } = req.body;
   const { userId } = req;
+  console.log(req.body)
   if (
     !marque ||
     !modele ||
@@ -139,7 +141,7 @@ export async function createNewCard(req, res) {
     !transmission ||
     !type ||
     !Carburant ||
-    Places < 0 
+    Places < 0
   )
     return res
       .status(422)
@@ -158,6 +160,7 @@ export async function createNewCard(req, res) {
     await new Car({
       marque,
       modele,
+      services,
       prix,
       kilometrage,
       location,

@@ -34,6 +34,10 @@ const carSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    services: {
+      type: {},
+      default: {},
+    },
     location: {
       type: String,
       default: "",

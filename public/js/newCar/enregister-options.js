@@ -71,11 +71,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Fonction pour sauvegarder les données du formulaire
   function saveFormData() {
+    const services = {
+      livraison: document.getElementById("livraison").checked,
+      nettoyage: document.getElementById("nettoyage").checked,
+      kilometargeLimite: document.getElementById("km-limite").checked,
+    };
     const formData = {
       features: getCheckedValues("features"),
       comfort: getCheckedValues("comfort"),
       services: {
-        livraison: document.getElementById("livraison").checked,
         pleinEssence: document.getElementById("plein-essence").checked,
         nettoyage: document.getElementById("nettoyage").checked,
       },
@@ -84,6 +88,45 @@ document.addEventListener("DOMContentLoaded", () => {
         animauxInterdits: document.getElementById("animaux-interdits").checked,
       },
     };
+    if (services.livraison) {
+      const rayonKM = document.getElementById("rayon-livraison").value;
+      const rayonPris = document.getElementById("frais-livraison").value;
+      services.livraison = {
+        enable: true,
+        value: rayonKM,
+        prix: rayonPris,
+      };
+    } else {
+      services.livraison = {
+        enable: false,
+      };
+    }
+    if (services.nettoyage) {
+      const pris = document.getElementById("frais-nettoyage").value;
+      services.nettoyage = {
+        enable: true,
+        prix: pris,
+      };
+    } else {
+      services.nettoyage = {
+        enable: false,
+      };
+    }
+
+    if (services.kilometargeLimite) {
+      const pris = document.getElementById("frais-km").value || 0;
+      const km = document.getElementById("limite-km").value || 0;
+      services.kilometargeLimite = {
+        enable: true,
+        prix: pris,
+        value: km,
+      };
+    } else {
+      services.kilometargeLimite = {
+        enable: false,
+      };
+    }
+
     const Caracteristiques = [
       ...formData.features,
       ...formData.comfort,
@@ -92,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         (key) => formData.restrictions[key]
       ),
     ];
+    localStorage.setItem("carshare_services", JSON.stringify(services));
     localStorage.setItem("carshare_options", JSON.stringify(Caracteristiques));
   }
 

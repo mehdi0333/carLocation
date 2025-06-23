@@ -289,6 +289,37 @@
                                 <% }) %>
                             </ul>
                         </div>
+                        <h5>Services</h5>
+                        <ul>
+                            <% if (model.services.livraison.enable) { %>
+                            <li style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="margin:0; font-weight: 500;">Livraison</p>
+                                    <p style="margin:0; font-size: 0.95em; color: #666;"><%= model.services.livraison.value %></p>
+                                </div>
+                                <p style="margin:0; font-weight: 500; color: #2d8f2d;"><%= model.services.livraison.prix %> DA</p>
+                            </li>
+                            <% } %>
+                            
+                            <% if (model.services.nettoyage && model.services.nettoyage.enable) { %>
+                            <li style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="margin:0; font-weight: 500;">Nettoyage</p>
+                                    <p style="margin:0; font-size: 0.95em; color: #666;"><%= model.services.nettoyage.value %></p>
+                                </div>
+                                <p style="margin:0; font-weight: 500; color: #2d8f2d;"><%= model.services.nettoyage.prix %> DA</p>
+                            </li>
+                            <% } %>
+                            <% if (model.services.kilometargeLimite && model.services.kilometargeLimite.enable) { %>
+                            <li style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="margin:0; font-weight: 500;">Kilométrage Limité</p>
+                                    <p style="margin:0; font-size: 0.95em; color: #666;"><%= model.services.kilometargeLimite.value %></p>
+                                </div>
+                                <p style="margin:0; font-weight: 500; color: #2d8f2d;"><%= model.services.kilometargeLimite.prix %> DA</p>
+                            </li>
+                            <% } %>
+                        </ul>       
                         <div class="owner-info">
                             <h5>Propriétaire</h5>
                             <div class="owner-profile">
