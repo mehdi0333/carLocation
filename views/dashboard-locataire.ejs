@@ -97,6 +97,60 @@
       <%}%>
 
       <section class="rental-history">
+        <h2>Demandes des locations</h2>
+        <table class="rental-table">
+          <thead>
+            <tr>
+              <th>Voiture</th>
+              <th>Dates</th>
+              <th>Lieu</th>
+              <th>Prix</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%meReservation.reverse().forEach(reservation=>{%>
+            <tr>
+              <td>
+                <%=`${reservation.car.marque} ${reservation.car.modele}`%>
+              </td>
+              <td>
+                <%=`${reservation.startDate.replaceAll("-","/")} -
+                ${reservation.endDate.replaceAll("-","/")}`%>
+              </td>
+              <td><%=reservation.car.location%></td>
+              <td><%=reservation.prix%> DZD</td>
+              <td>
+                <% if (reservation.status === 'en_attente') { %>
+                  <span class="status-badge status-pending">En attente</span>
+                <% } else if (reservation.status === 'confirmée') { %>
+                  <span class="status-badge status-confirmed">Confirmée</span>
+                <% } else if (reservation.status === 'refusée') { %>
+                  <span class="status-badge status-refused">Refusée</span>
+                <% } else { %>
+                  <span class="status-badge">-</span>
+                <% } %>
+                <style>
+                  .status-badge {
+                    display: inline-block;
+                    padding: 0.25em 0.75em;
+                    border-radius: 12px;
+                    font-size: 0.95em;
+                    font-weight: 500;
+                    color: #fff;
+                  }
+                  .status-pending { background: #f0ad4e; }
+                  .status-confirmed { background: #28a745; }
+                  .status-refused { background: #dc3545; }
+                </style>
+              </td>
+            </tr>
+            <%})%>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="rental-history">
         <h2>Historique des locations</h2>
         <table class="rental-table">
           <thead>
@@ -109,7 +163,7 @@
             </tr>
           </thead>
           <tbody>
-            <%myReservation.reverse().forEach(reservation=>{%>
+            <%reservationHistory.reverse().forEach(reservation=>{%>
             <tr>
               <td>
                 <%=`${reservation.car.marque} ${reservation.car.modele}`%>
@@ -131,7 +185,7 @@
                 <%} else {%>
                 <span
                   class="rating-badge openRatingModal"
-                  style="cursor: pointer;"
+                  style="cursor: pointer"
                   data-carId="<%=reservation._id%>"
                 >
                   <i class="fa-solid fa-star"></i> Évalué

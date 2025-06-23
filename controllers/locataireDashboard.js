@@ -21,14 +21,13 @@ export async function getoLocataireDashboard(req, res) {
       reservation.car = car;
       myReservation.push(reservation);
     }
-
+    // filter reservation en cours
     const reservationEnCour = myReservation.filter((ele) => {
       if (ele.status !== "confirmée") return false;
       const now = new Date();
 
       const start = getDateData(ele.startDate);
       const end = getDateData(ele.endDate);
-      console.log(start, end);
       if (+start.year > now.getFullYear()) return false;
       if (+start.year === now.getFullYear()) {
         if (+start.month > now.getMonth() + 1) return false;
@@ -46,10 +45,46 @@ export async function getoLocataireDashboard(req, res) {
       }
       return true;
     });
+    // filter other reservation
+    const meReservation = myReservation.filter((ele) => {
+      if (ele.status !== "confirmée") return true;
+      const now = new Date();
+
+      const end = getDateData(ele.endDate);
+
+      // * with end date
+      if (+end.year < now.getFullYear()) return false;
+      if (+end.year === now.getFullYear()) {
+        if (+end.month < now.getMonth() + 1) return false;
+        if (+end.month === now.getMonth() + 1) {
+          if (+end.day < now.getDate()) return false;
+        }
+      }
+      return true;
+    });
+    // filter history
+    const reservationHistory = myReservation.filter((ele) => {
+      if (ele.status !== "confirmée") return false;
+      const now = new Date();
+
+      const end = getDateData(ele.endDate);
+
+      // * with end date
+      if (+end.year < now.getFullYear()) return true;
+      if (+end.year === now.getFullYear()) {
+        if (+end.month < now.getMonth() + 1) return true;
+        if (+end.month === now.getMonth() + 1) {
+          if (+end.day < now.getDate()) return true;
+        }
+      }
+      return false;
+    });
 
     res.render("dashboard-locataire", {
       user,
       myReservation,
+      reservationHistory,
+      meReservation,
       reservationEnCour,
       model: null,
     });
