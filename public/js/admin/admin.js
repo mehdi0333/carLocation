@@ -800,7 +800,7 @@ function initDisputes() {
   const actionButtons = document.querySelectorAll(".action-btn:not(.view)");
   if (actionButtons) {
     actionButtons.forEach((button) => {
-      button.addEventListener("click",function () {
+      button.addEventListener("click", function () {
         const row = this.closest("tr");
         const disputeId = row.querySelector("td:first-child").textContent;
 
@@ -873,7 +873,7 @@ function initDisputes() {
 
           showNotification(`Le litige ${disputeId} a été rouvert.`);
         }
- 
+
         // Réinitialiser les écouteurs d'événements après modification du DOM
         initDisputes();
       });
@@ -1230,6 +1230,53 @@ function initComplaints() {
 
   // Fermer le modal en cliquant en dehors
   if (modal) {
+    const modelButtons = document.querySelectorAll(".modal-btn:not(.cancel)");
+    if (modelButtons) {
+      modelButtons.forEach((button) => {
+        // Supprimer les anciens écouteurs d'événements
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+
+        // Ajouter les nouveaux écouteurs d'événements
+
+        try {
+          newButton.addEventListener("click", async function (e) {
+            alert("plaintId");
+
+            const plaintId = e.target.getAttribute("data-id");
+            if (this.classList.contains("process")) {
+              await fetch("/api/changePlantStatus", {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  plaintId,
+                  status: "process",
+                }),
+              });
+            } else if (this.classList.contains("resolve")) {
+              // Résoudre la plainte
+              await fetch("/api/changePlantStatus", {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  plaintId,
+                  status: "resolve",
+                }),
+              });
+            }
+            // INSERT_YOUR_CODE
+            window.location.href = "/complaints";
+          });
+        } catch (error) {
+          console.error(error);
+          console.log(error);
+        }
+      });
+    }
     modal.addEventListener("click", function (event) {
       if (event.target === modal) {
         closeModalFunction();
@@ -1246,40 +1293,37 @@ function initComplaints() {
       button.parentNode.replaceChild(newButton, button);
 
       // Ajouter les nouveaux écouteurs d'événements
-      
-    try{
-      newButton.addEventListener("click", async function () {
-        const row = this.closest("tr");
-        if (!row) return;
-        const plaintId = document
-          .querySelector(".action-btn.view")
-          .getAttribute("data-id");
 
-        const complaintId =
-          row.querySelector("td:first-child")?.textContent || "";
-        const statusCell = row.querySelector("td:nth-child(5)");
-        const actionCell = row.querySelector("td:last-child");
+      try {
+        newButton.addEventListener("click", async function () {
+          const row = this.closest("tr");
+          if (!row) return;
+          const plaintId = row
+            .querySelector(".action-btn.view")
+            ?.getAttribute("data-id");
+          const statusCell = row.querySelector("td:nth-child(5)");
+          const actionCell = row.querySelector("td:last-child");
 
-        if (this.classList.contains("process")) {
-         await fetch("/api/changePlantStatus", {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              plaintId,
-              status: "process",
-            }),
-          })
-         
-          // Traiter la plainte
-          if (statusCell) {
-            statusCell.innerHTML =
-              '<span class="status-badge in-progress">En cours</span>';
-          }
+          if (this.classList.contains("process")) {
+            await fetch("/api/changePlantStatus", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                plaintId,
+                status: "process",
+              }),
+            });
 
-          if (actionCell) {
-            actionCell.innerHTML = `
+            // Traiter la plainte
+            if (statusCell) {
+              statusCell.innerHTML =
+                '<span class="status-badge in-progress">En cours</span>';
+            }
+
+            if (actionCell) {
+              actionCell.innerHTML = `
                         <div class="action-buttons">
                             <button class="action-btn view" data-id="${plaintId}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -1291,27 +1335,26 @@ function initComplaints() {
                             </button>
                         </div>
                     `;
-          }
+            }
+          } else if (this.classList.contains("resolve")) {
+            // Résoudre la plainte
+            await fetch("/api/changePlantStatus", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                plaintId,
+                status: "resolve",
+              }),
+            });
+            if (statusCell) {
+              statusCell.innerHTML =
+                '<span class="status-badge resolved">Résolu</span>';
+            }
 
-        } else if (this.classList.contains("resolve")) {
-          // Résoudre la plainte
-          await fetch("/api/changePlantStatus", {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              plaintId,
-              status: "resolve",
-            }),
-          })
-          if (statusCell) {
-            statusCell.innerHTML =
-              '<span class="status-badge resolved">Résolu</span>';
-          }
-
-          if (actionCell) {
-            actionCell.innerHTML = `
+            if (actionCell) {
+              actionCell.innerHTML = `
                         <div class="action-buttons">
                             <button class="action-btn view" data-id="${plaintId}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -1323,27 +1366,26 @@ function initComplaints() {
                             </button>
                         </div>
                     `;
-          }
+            }
+          } else if (this.classList.contains("reopen")) {
+            await fetch("/api/changePlantStatus", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                plaintId,
+                status: "En attente",
+              }),
+            });
+            // Rouvrir la plainte
+            if (statusCell) {
+              statusCell.innerHTML =
+                '<span class="status-badge open">Ouvert</span>';
+            }
 
-        } else if (this.classList.contains("reopen")) {
-          await fetch("/api/changePlantStatus", {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              plaintId,
-              status: "En attente",
-            }),
-          })
-          // Rouvrir la plainte
-          if (statusCell) {
-            statusCell.innerHTML =
-              '<span class="status-badge open">Ouvert</span>';
-          }
-
-          if (actionCell) {
-            actionCell.innerHTML = `
+            if (actionCell) {
+              actionCell.innerHTML = `
                         <div class="action-buttons">
                             <button class="action-btn view" data-id="${plaintId}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -1355,14 +1397,14 @@ function initComplaints() {
                             </button>
                         </div>
                     `;
+            }
           }
-        }
-      // INSERT_YOUR_CODE
-      window.location.reload();
-      });
-    }catch (error) {
-      console.error(error)
-    }
+          // INSERT_YOUR_CODE
+          window.location.reload();
+        });
+      } catch (error) {
+        console.error(error);
+      }
     });
   }
 

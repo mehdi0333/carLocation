@@ -112,7 +112,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% plaints.forEach(plaint => { %>
+                  <% plaints.reverse().forEach(plaint => { %>
                   <tr>
                     <td><%=plaint.sujet%></td>
                     <td>
@@ -128,12 +128,17 @@
                     </td>
                     <% } else { %>
                     <td>
-                      <span class="status-badge resolved"><%=plaint.statut%></span>
+                      <span class="status-badge resolved"
+                        ><%=plaint.statut%></span
+                      >
                     </td>
                     <% } %>
                     <td>
                       <div class="action-buttons">
-                        <button class="action-btn view" data-id="<%= plaint._id %>">
+                        <button
+                          class="action-btn view"
+                          data-id="<%= plaint._id %>"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -173,15 +178,43 @@
                           Traiter
                         </button>
                         <%} else if (plaint.statut ==="process") {%>
-                          <button class="action-btn resolve">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                              Résoudre
-                          </button>
-                        <%}else if (plaint.statut === "resolve"){%>  
-                          <button class="action-btn reopen">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
-                              Rouvrir
-                          </button>
+                        <button class="action-btn resolve">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                          </svg>
+                          Résoudre
+                        </button>
+                        <%}else if (plaint.statut === "resolve"){%>
+                        <button class="action-btn reopen">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path
+                              d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+                            ></path>
+                            <path d="M3 3v5h5"></path>
+                          </svg>
+                          Rouvrir
+                        </button>
                         <%}%>
                       </div>
                     </td>
@@ -273,7 +306,10 @@
               <h5>Pièces jointes</h5>
               <div class="attachment-files">
                 <% model.imgPath.forEach(ele => { %>
-                <div class="attachment-file" onclick="window.open('/<%= ele %>', '_blank')">
+                <div
+                  class="attachment-file"
+                  onclick="window.open('/<%= ele %>', '_blank')"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -325,8 +361,12 @@
         </div>
         <div class="modal-footer">
           <button class="modal-btn cancel">Fermer</button>
-          <button class="modal-btn process">Traiter</button>
-          <button class="modal-btn resolve">Résoudre</button>
+          <button class="modal-btn process" data-id="<%=model._id%>">
+            Traiter
+          </button>
+          <button class="modal-btn resolve" data-id="<%=model._id%>">
+            Résoudre
+          </button>
         </div>
       </div>
     </div>
